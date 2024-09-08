@@ -1,12 +1,13 @@
 import { userRouter, express } from './controller/UserController.js'
 import { productRouter } from './controller/ProductController.js'
+import { cartRouter } from './controller/CartController.js'
 import cors from 'cors'
 import path from 'path'
 
-// Create an express app
+
 const app = express()
 const port = +process.env.PORT || 4000
-// Middleware
+
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Credentials", "true");
@@ -17,8 +18,6 @@ app.use((req, res, next) => {
 
     next()
 })
-app.use('/user', userRouter)
-app.use('/product', productRouter)
 app.use(
     express.static('./static'),
     express.json(),
@@ -27,10 +26,11 @@ app.use(
     }),
     cors()
 )
+app.use('/users', userRouter)
+app.use('/products', productRouter)
+app.use('/cart', cartRouter);
 
-app.get('^/$|/eShop', (req, res) => {
-    res.status(200).sendFile(path.resolve('./static/html/index.html'))
-})
+
 
 app.get('*', (req, res) => {
     res.json({
