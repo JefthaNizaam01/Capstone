@@ -1,5 +1,5 @@
-import {Users} from "./User.js"
-import {Products} from "./Product.js"
+import {Users} from "./Users.js"
+import {Products} from "./Products.js"
 import {Cart} from "./Cart.js"
 
 

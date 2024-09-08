@@ -1,3 +1,4 @@
+/* Global styles */
 *,
 *::after,
 *::before {
@@ -17,29 +18,51 @@ body {
 }
 
 
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
 h2 {
     margin-top: 30px;
+    font-size: 1.75rem;
+    color: #444;
 }
+
 
 table.endpoint {
     border-collapse: collapse;
-    margin-bottom: 20px;
-    width: 80%;
-    margin-left: auto;   
-    margin-right: auto;  
+    margin: 20px auto;
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
+
 table.endpoint th, table.endpoint td {
-    padding: 10px;
+    padding: 12px 15px;
     text-align: left;
-    border: 1px solid black;
+    border: 1px solid #ddd;
+    border-bottom: 2px solid #ddd; 
 }
 
 table.endpoint th {
-    background-color: crimson;
-    color: white;
+    background-color: #0f0e0e;
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 2px solid #444; 
+}
+
+table.endpoint tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table.endpoint tr:hover {
+    background-color: #f1f1f1;
 }
 
 th, td {
-    width: 20rem;
+    font-size: 1rem;
+    text-align: center;
 }
