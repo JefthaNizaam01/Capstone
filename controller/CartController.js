@@ -17,7 +17,7 @@ cartRouter.post('/addToCart', (req, res) => {
 });
 
 cartRouter.delete('/deleteFromCart', (req, res) => {
-    const { prodID, userID } = req.body;
+    const { prodID, userID } = req.body; 
     cart.deleteFromCart(prodID, userID, res);
 });
 

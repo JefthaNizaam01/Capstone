@@ -3,136 +3,168 @@ import { createToken } from '../middleware/AuthenticateUser.js';
 import { compare, hash } from 'bcrypt';
 
 class Users {
-
-    queryDB(query, params = []) {
-        return new Promise((resolve, reject) => {
-            db.query(query, params, (err, result) => {
-                if (err) return reject(err);
-                resolve(result);
-            });
-        });
-    }
-
-    
-    handleError(res, err, msg, statusCode = 500) {
-        console.error(msg, err);
-        res.status(statusCode).json({ msg });
-    }
-
-    
-    async fetchUsers(req, res) {
+    // Fetch all users
+    fetchUsers(req, res) {
         try {
             const strQry = `SELECT userID, firstName, lastName, userAge, Gender, userRole, emailAdd, userPass, userProfile FROM Users;`;
-            const result = await this.queryDB(strQry);
-            res.json({ status: res.statusCode, result });
-        } catch (err) {
-            this.handleError(res, err, 'Issue when retrieving all users.');
+            db.query(strQry, (err, result) => {
+                if (err) {
+                    console.error('Error retrieving users:', err);
+                    return res.status(500).json({ msg: 'Issue when retrieving all users.' });
+                }
+                res.json({ status: res.statusCode, result });
+            });
+        } catch (e) {
+            console.error('Error in fetchUsers:', e);
+            res.status(500).json({ msg: e.message });
         }
     }
 
-   
-    async fetchUser(req, res) {
+    // Fetch a single user by ID
+    fetchUser(req, res) {
         try {
             const userID = parseInt(req.params.id, 10);
             if (isNaN(userID)) return res.status(400).json({ msg: 'Invalid user ID' });
 
             const strQry = `SELECT userID, firstName, lastName, userAge, Gender, userRole, emailAdd, userPass, userProfile FROM Users WHERE userID = ?;`;
-            const result = await this.queryDB(strQry, [userID]);
-
-            if (result.length === 0) return res.status(404).json({ msg: 'User not found' });
-            res.json({ status: res.statusCode, result: result[0] });
-        } catch (err) {
-            this.handleError(res, err, 'Unable to fetch user');
+            db.query(strQry, [userID], (err, result) => {
+                if (err) {
+                    console.error('Error fetching user:', err);
+                    return res.status(500).json({ msg: `Unable to fetch user with id ${userID}` });
+                }
+                if (result.length === 0) return res.status(404).json({ msg: 'User not found' });
+                res.json({ status: res.statusCode, result: result[0] });
+            });
+        } catch (e) {
+            console.error('Error in fetchUser:', e);
+            res.status(500).json({ msg: e.message });
         }
     }
 
-   
+    // Register a new user
     async registerUser(req, res) {
         try {
             const data = req.body;
             data.userPass = await hash(data.userPass, 12);
-
             const user = {
                 emailAdd: data.emailAdd,
-                userPass: data.userPass,
+                userPass: data.userPass
             };
 
             const strQry = `INSERT INTO Users SET ?;`;
-            await this.queryDB(strQry, [data]);
-
-            const token = createToken(user);
-            res.json({ token, msg: 'You are now registered.' });
-        } catch (err) {
-            this.handleError(res, err, 'This email has already been taken.');
+            db.query(strQry, [data], (err) => {
+                if (err) {
+                    console.error('Error registering user:', err);
+                    return res.status(500).json({ msg: 'This email has already been taken' });
+                }
+                const token = createToken(user);
+                res.json({ token, msg: 'You are now registered.' });
+            });
+        } catch (e) {
+            console.error('Error in registerUser:', e);
+            res.status(500).json({ msg: e.message });
         }
     }
 
-   
+    // Update an existing user
     async updateUser(req, res) {
         try {
             const data = req.body;
-            const userID = parseInt(req.params.id, 10);
-
-            if (isNaN(userID)) return res.status(400).json({ msg: 'Invalid user ID' });
-
             if (data.userPass) {
                 data.userPass = await hash(data.userPass, 12);
             }
+            const userID = parseInt(req.params.id, 10);
+            if (isNaN(userID)) return res.status(400).json({ msg: 'Invalid user ID' });
 
             const strQry = `UPDATE Users SET ? WHERE userID = ?;`;
-            await this.queryDB(strQry, [data, userID]);
-
-            res.json({ status: res.statusCode, msg: 'The user record was updated' });
-        } catch (err) {
-            this.handleError(res, err, 'Unable to update user.');
+            db.query(strQry, [data, userID], (err) => {
+                if (err) {
+                    console.error('Error updating user:', err);
+                    return res.status(500).json({ msg: 'Unable to update user' });
+                }
+                res.json({ status: res.statusCode, msg: 'The user record was updated' });
+            });
+        } catch (e) {
+            console.error('Error in updateUser:', e);
+            res.status(500).json({ msg: e.message });
         }
     }
 
-   
-    async deleteUser(req, res) {
+    // Delete a user
+    deleteUser(req, res) {
         try {
             const userID = parseInt(req.params.id, 10);
             if (isNaN(userID)) return res.status(400).json({ msg: 'Invalid user ID' });
 
             const strQry = `DELETE FROM Users WHERE userID = ?;`;
-            await this.queryDB(strQry, [userID]);
-
-            res.json({ status: res.statusCode, msg: 'User deleted successfully' });
-        } catch (err) {
-            this.handleError(res, err, 'Error deleting user');
+            db.query(strQry, [userID], (err) => {
+                if (err) {
+                    console.error('Error deleting user:', err);
+                    return res.status(500).json({ msg: 'Error deleting user' });
+                }
+                res.json({ status: res.statusCode, msg: 'User deleted successfully' });
+            });
+        } catch (e) {
+            console.error('Error in deleteUser:', e);
+            res.status(500).json({ msg: e.message });
         }
     }
 
-    
+    // Login a user
     async login(req, res) {
         try {
             const { emailAdd, userPass } = req.body;
-            const strQry = `SELECT userID, firstName, lastName, userAge, Gender, userRole, emailAdd, userPass, userProfile FROM Users WHERE emailAdd = ?;`;
+            const strQry = `SELECT userID, firstName, lastName, userAge, Gender, userRole, emailAdd, userPass, userProfile 
+                            FROM Users WHERE emailAdd = ?;`;
 
-            const results = await this.queryDB(strQry, [emailAdd]);
+            db.query(strQry, [emailAdd], async (err, results) => {
+                if (err) {
+                    return res.status(500).json({
+                        status: 500,
+                        msg: 'Unable to process login request.',
+                        error: err.message
+                    });
+                }
 
-            if (results.length === 0) {
-                return res.status(401).json({ status: 401, err: 'Incorrect email or password.' });
-            }
+                if (results.length === 0) {
+                    return res.status(401).json({
+                        status: 401,
+                        err: 'Incorrect email or password.',
+                    });
+                }
 
-            const user = results[0];
-            const isValidPass = await compare(userPass, user.userPass);
+                const user = results[0];
+                const isValidPass = await compare(userPass, user.userPass);
 
-            if (isValidPass) {
-                const token = createToken({
-                    id: user.userID,
-                    emailAdd: user.emailAdd,
-                    userRole: user.userRole,
-                });
+                if (isValidPass) {
+                    const token = createToken({
+                        id: user.userID,
+                        emailAdd: user.emailAdd,
+                        userRole: user.userRole, // Send userRole in the token payload
+                    });
 
-                res.status(200).json({ status: 200, token, user, msg: 'Login successful.' });
-            } else {
-                res.status(401).json({ status: 401, err: 'Incorrect email or password.' });
-            }
-        } catch (err) {
-            this.handleError(res, err, 'Unable to process login request.');
+                    return res.status(200).json({
+                        status: 200,
+                        token,
+                        user,
+                        msg: 'Login successful.'
+                    });
+                } else {
+                    return res.status(401).json({
+                        status: 401,
+                        err: 'Incorrect email or password.',
+                    });
+                }
+            });
+        } catch (e) {
+            return res.status(500).json({
+                status: 500,
+                msg: 'Internal server error.',
+                error: e.message
+            });
         }
     }
+    
 }
 
 export { Users };

@@ -12,6 +12,10 @@ productRouter.get('/', verifyAToken, (req, res) => {
     products.fetchProducts(req, res)
 })
 
+productRouter.get('/recent', (req, res) => {
+    products.recentProducts(req, res)
+})
+
 productRouter.get('/:id', verifyAToken, (req, res) => {
     products.fetchProduct(req, res)
 })
