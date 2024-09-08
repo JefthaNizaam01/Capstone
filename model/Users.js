@@ -1,174 +1,138 @@
-import { connection as db } from '../config/index.js'
-import { createToken } from '../middleware/AuthenticateUser.js'
-import { compare, hash } from 'bcrypt'
+import { connection as db } from '../config/index.js';
+import { createToken } from '../middleware/AuthenticateUser.js';
+import { compare, hash } from 'bcrypt';
 
 class Users {
-    fetchUsers(req, res) {
+
+    queryDB(query, params = []) {
+        return new Promise((resolve, reject) => {
+            db.query(query, params, (err, result) => {
+                if (err) return reject(err);
+                resolve(result);
+            });
+        });
+    }
+
+    
+    handleError(res, err, msg, statusCode = 500) {
+        console.error(msg, err);
+        res.status(statusCode).json({ msg });
+    }
+
+    
+    async fetchUsers(req, res) {
         try {
-            const strQry = `
-        SELECT firstName, lastName, age, emailAdd, userRole, profileURL
-        FROM Users;
-        `
-            db.query(strQry, (err, results) => {
-                if (err) throw new Error('Issue when retrieving all users.')
-                res.json({
-                    status: res.statusCode,
-                    results
-                })
-            })
-        } catch (e) {
-            res.json({
-                status: 404,
-                msg: e.message
-            })
+            const strQry = `SELECT userID, firstName, lastName, userAge, Gender, userRole, emailAdd, userPass, userProfile FROM Users;`;
+            const result = await this.queryDB(strQry);
+            res.json({ status: res.statusCode, result });
+        } catch (err) {
+            this.handleError(res, err, 'Issue when retrieving all users.');
         }
     }
-    fetchUser(req, res) {
+
+   
+    async fetchUser(req, res) {
         try {
-            const strQry = `
-        SELECT userID, firstName, lastName, age, emailAdd, userRole, profileURL
-        FROM Users
-        WHERE userID = ${req.params.id};
-        `
-            db.query(strQry, (err, result) => {
-                if (err) throw new Error('Issue when retrieving a user.')
-                res.json({
-                    status: res.statusCode,
-                    result: result[0]
-                })
-            })
-        } catch (e) {
-            res.json({
-                status: 404,
-                msg: 'Please try again later.'
-            })
+            const userID = parseInt(req.params.id, 10);
+            if (isNaN(userID)) return res.status(400).json({ msg: 'Invalid user ID' });
+
+            const strQry = `SELECT userID, firstName, lastName, userAge, Gender, userRole, emailAdd, userPass, userProfile FROM Users WHERE userID = ?;`;
+            const result = await this.queryDB(strQry, [userID]);
+
+            if (result.length === 0) return res.status(404).json({ msg: 'User not found' });
+            res.json({ status: res.statusCode, result: result[0] });
+        } catch (err) {
+            this.handleError(res, err, 'Unable to fetch user');
         }
     }
+
+   
     async registerUser(req, res) {
         try {
-            let data = req.body
-            data.pwd = await hash(data.pwd, 12)
-            // Payload
-            let user = {
+            const data = req.body;
+            data.userPass = await hash(data.userPass, 12);
+
+            const user = {
                 emailAdd: data.emailAdd,
-                pwd: data.pwd
-            }
-            let strQry = `
-        INSERT INTO Users
-        SET ?;
-        `
-            db.query(strQry, [data], (err) => {
-                if (err) {
-                    res.json({
-                        status: res.statusCode,
-                        msg: 'This email has already been taken'
-                    })
-                } else {
-                    const token = createToken(user)
-                    res.json({
-                        token,
-                        msg: 'You are now registered.'
-                    })
-                }
-            })
-        } catch (e) {
-            res.json({
-                status: 404,
-                err: e.message
-            })
+                userPass: data.userPass,
+            };
+
+            const strQry = `INSERT INTO Users SET ?;`;
+            await this.queryDB(strQry, [data]);
+
+            const token = createToken(user);
+            res.json({ token, msg: 'You are now registered.' });
+        } catch (err) {
+            this.handleError(res, err, 'This email has already been taken.');
         }
     }
+
+   
     async updateUser(req, res) {
         try {
-            let data = req.body
-            if (data.pwd) {
-                data.pwd = await hash(data.pwd, 12)
-            }
-            const strQry = `
-        UPDATE Users
-        SET ?
-        WHERE userID = ${req.params.id}
-        `
-            db.query(strQry, [data], (err) => {
-                if (err) throw new Error('Unable to update a user')
-                res.json({
-                    status: res.statusCode,
-                    msg: 'The user record was updated.'
-                })
-            })
-        } catch (e) {
-            res.json({
-                status: 400,
-                err: e.message
-            })
-        }
+            const data = req.body;
+            const userID = parseInt(req.params.id, 10);
 
-    }
-    deleteUser(req, res) {
-        try {
-            const strQry = `
-        DELETE FROM Users
-        WHERE userID = ${req.params.id};
-        `
-            db.query(strQry, (err) => {
-                if (err) throw new Error('To delete a user, please review your delete query.')
-                res.json({
-                    status: res.statusCode,
-                    msg: 'A user\'s information was removed.'
-                })
-            })
-        } catch (e) {
-            res.json({
-                status: 404,
-                err: e.message
-            })
+            if (isNaN(userID)) return res.status(400).json({ msg: 'Invalid user ID' });
+
+            if (data.userPass) {
+                data.userPass = await hash(data.userPass, 12);
+            }
+
+            const strQry = `UPDATE Users SET ? WHERE userID = ?;`;
+            await this.queryDB(strQry, [data, userID]);
+
+            res.json({ status: res.statusCode, msg: 'The user record was updated' });
+        } catch (err) {
+            this.handleError(res, err, 'Unable to update user.');
         }
     }
+
+   
+    async deleteUser(req, res) {
+        try {
+            const userID = parseInt(req.params.id, 10);
+            if (isNaN(userID)) return res.status(400).json({ msg: 'Invalid user ID' });
+
+            const strQry = `DELETE FROM Users WHERE userID = ?;`;
+            await this.queryDB(strQry, [userID]);
+
+            res.json({ status: res.statusCode, msg: 'User deleted successfully' });
+        } catch (err) {
+            this.handleError(res, err, 'Error deleting user');
+        }
+    }
+
+    
     async login(req, res) {
         try {
-            const { emailAdd, pwd } = req.body
-            const strQry = `
-        SELECT userID, firstName, lastName, age, emailAdd, pwd, userRole, profileURL
-        FROM Users
-        WHERE emailAdd = '${emailAdd}';
-        `
-            db.query(strQry, async (err, result) => {
-                if (err) throw new Error('To login, please review your query.')
-                if (!result?.length) {
-                    res.json(
-                        {
-                            status: 401,
-                            msg: 'You provided a wrong email.'
-                        }
-                    )
-                } else {
-                    const isValidPass = await compare(pwd, result[0].pwd)
-                    if (isValidPass) {
-                        const token = createToken({
-                            emailAdd,
-                            pwd
-                        })
-                        res.json({
-                            status: res.statusCode,
-                            token,
-                            result: result[0]
-                        })
-                    } else {
-                        res.json({
-                            status: 401,
-                            msg: 'Invalid password or you have not registered'
-                        })
-                    }
-                }
-            })
-        } catch (e) {
-            res.json({
-                status: 404,
-                msg: e.message
-            })
+            const { emailAdd, userPass } = req.body;
+            const strQry = `SELECT userID, firstName, lastName, userAge, Gender, userRole, emailAdd, userPass, userProfile FROM Users WHERE emailAdd = ?;`;
+
+            const results = await this.queryDB(strQry, [emailAdd]);
+
+            if (results.length === 0) {
+                return res.status(401).json({ status: 401, err: 'Incorrect email or password.' });
+            }
+
+            const user = results[0];
+            const isValidPass = await compare(userPass, user.userPass);
+
+            if (isValidPass) {
+                const token = createToken({
+                    id: user.userID,
+                    emailAdd: user.emailAdd,
+                    userRole: user.userRole,
+                });
+
+                res.status(200).json({ status: 200, token, user, msg: 'Login successful.' });
+            } else {
+                res.status(401).json({ status: 401, err: 'Incorrect email or password.' });
+            }
+        } catch (err) {
+            this.handleError(res, err, 'Unable to process login request.');
         }
     }
 }
-export {
-    Users
-}
+
+export { Users };

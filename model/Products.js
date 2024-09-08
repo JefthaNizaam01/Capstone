@@ -3,35 +3,10 @@ import { connection as db } from '../config/index.js'
 class Products {
     fetchProducts(req, res) {
         try {
-            const strQry = `
-            SELECT productID, prodName, category, prodDescription, prodURL, amount
-            FROM Products;
-            `
+            const strQry = `SELECT prodID, prodName, amount, Category, prodURL
+                            FROM Products;`
             db.query(strQry, (err, results) => {
-                if (err) throw new Error('Unable to fetch all products')
-                res.json({
-                    status: res.statusCode,
-                    results
-                })
-            })
-        } catch (e) {
-            res.json({
-                status: 404,
-                msg: e.message
-            })
-        }
-    }
-
-    recentProducts(req, res) {
-        try {
-            const strQry = `
-            SELECT productID, prodName, category, prodDescription, prodURL, amount
-            FROM Products
-            ORDER BY productID DESC
-            LIMIT 5;
-            `
-            db.query(strQry, (err, results) => {
-                if (err) throw new Error('Unable to retrieve recent products')
+                if (err) throw new Error('Unable to fetch all products.')
                 res.json({
                     status: res.statusCode,
                     results
@@ -47,13 +22,11 @@ class Products {
 
     fetchProduct(req, res) {
         try {
-            const strQry = `
-            SELECT productID, prodName, category, prodDescription, prodURL, amount
-            FROM Products
-            WHERE productID = ${req.params.id};
-            `
-            db.query(strQry, (err, result) => { 
-                if (err) throw new Error('Unable to retrieve a product')
+            const strQry = `SELECT prodID, prodName, amount, Category, prodURL
+                            FROM Products 
+                            WHERE prodID = ${req.params.id};`
+            db.query(strQry, (err, result) => {
+                if (err) throw new Error(`Unable to fetch product with id ${req.params.id}`)
                 res.json({
                     status: res.statusCode,
                     result: result[0]
@@ -67,14 +40,11 @@ class Products {
         }
     }
 
-    addProduct(req, res) { 
+    addProduct(req, res) {
         try {
-            const strQry = `
-            INSERT INTO Products
-            SET ?
-            `
-            db.query(strQry, [req.body], (err) => { 
-                if (err) throw new Error('Unable to add a new product')
+            const strQry = `INSERT INTO Products SET ?;`
+            db.query(strQry, [req.body], (err) => {
+                if (err) throw new Error('Unable to add a product')
                 res.json({
                     status: res.statusCode,
                     msg: 'Product was added'
@@ -82,56 +52,56 @@ class Products {
             })
         } catch (e) {
             res.json({
-                status: 404,
-                err: e.message
+                status: 400,
+                msg: e.message
             })
-         }
+        }
     }
 
-    updateProduct(req, res) { 
+    updateProduct(req, res) {
         try {
             const strQry = `
             UPDATE Products
             SET ?
-            WHERE productID = ${req.params.id};
+            WHERE prodID = ${req.params.id}
             `
-            db.query(strQry, [req.body], (err) => { 
+            db.query(strQry, [req.body], (err) => {
                 if (err) throw new Error('Unable to update a product')
                 res.json({
                     status: res.statusCode,
-                    msg: 'Product was updated.'
+                    msg: 'The product was updated'
                 })
             })
-        } catch (e) { 
+        } catch (e) {
             res.json({
-                status: 404,
+                status: 400,
                 err: e.message
             })
         }
     }
 
-    deleteProduct(req, res) { 
+    deleteProduct(req, res) {
         try {
             const strQry = `
             DELETE FROM Products
-            WHERE productID = ${req.params.id};
+            WHERE prodID = ${req.params.id};
             `
-            db.query(strQry, (err) => { 
-                if (err) throw new Error('Unable to delete a product')
+            db.query(strQry, (err) => {
+                if (err) throw new Error('Unable to delete a product.')
                 res.json({
                     status: res.statusCode,
-                    msg: 'A product was removed.'
+                    msg: "Product deleted successfully."
                 })
             })
-        } catch (e) { 
+        } catch (e) {
             res.json({
                 status: 404,
-                err: e.message
+                msg: e.message
             })
         }
     }
 }
 
-export { 
+export {
     Products
 }
