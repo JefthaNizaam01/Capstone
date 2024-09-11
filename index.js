@@ -6,6 +6,14 @@ import cookieParser from 'cookie-parser';
 import productsRoute from './Routes/productsRoute.js';
 import cartRoute from './Routes/cartRoute.js';
 import verifyJwt from './Middleware/verifyJwt.js';
+import express from 'express';
+import { config } from 'dotenv';
+config();
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import productsRoute from './Routes/productsRoute.js';
+import cartRoute from './Routes/cartRoute.js';
+import verifyJwt from './Middleware/verifyJwt.js';
 import userRoute from './Routes/userRoute.js';
 import authenticate from './Middleware/signToken.js';
 
