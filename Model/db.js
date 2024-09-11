@@ -11,7 +11,7 @@ const getProducts = async() => {
 // returns product by an id
 const getProductByID = async (id) => {
     const [product] = await pool.query(`
-        SELECT * FROM products WHERE productID = ?
+        SELECT * FROM products WHERE prodID = ?
     `, [id]);
 
     if(!id || isNaN(id) || id > product){
@@ -24,10 +24,10 @@ const getProductByID = async (id) => {
 }
 
 
-const editProduct = async (productName, productDesc, amount, productURL, category, productID) => {
+const editProduct = async (productName, productDesc, amount, productURL, category, prodID) => {
     const [product] = await pool.query(`
-        UPDATE products SET productName = ?, productDesc = ?, amount = ?, productURL = ?, category = ? WHERE productID = ?
-    `, [productName, productDesc, amount, productURL, category, productID]);
+        UPDATE products SET productName = ?, productDesc = ?, amount = ?, productURL = ?, category = ? WHERE prodID = ?
+    `, [productName, productDesc, amount, productURL, category, prodID]);
 }
 
 

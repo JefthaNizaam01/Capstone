@@ -53,7 +53,7 @@ export default {
 
         } catch (error) {
             res.status(404).json({
-                msg: "Unable to upadate a product that does not exist"
+                msg: "Unable to update a product that does not exist"
             })
         }
     },
