@@ -1,47 +1,55 @@
-import path from 'path'
-import { userRouter, express, cartRouter } from './controller/userController.js'
-import { productRouter } from './controller/ProductController.js'
-import { errorHandling } from './middleware/ErrorHandling.js'
-import cors from 'cors'
+import express from 'express';
+import { config } from 'dotenv';
+config();
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import productsRoute from './Routes/productsRoute.js';
+import cartRoute from './Routes/cartRoute.js';
+import verifyJwt from './Middleware/verifyJwt.js'
+import userRoute from './Routes/userRoute.js';
+import authenticate from './Middleware/signToken.js';
 
-// Express App
-const app = express()
-const port = +process.env.PORT || 4000
+const app = express();
+const PORT = process.env.MYSQL_ADDON_PORT || 2303;
 
+app.use(express.static('./Static'));
 
-// Middleware
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Credentials", "true")
-    res.header("Access-Control-Allow-Methods", "*")
-    res.header("Access-Control-Request-Methods", "*")
-    res.header("Access-Control-Allow-Headers", "*")
-    res.header("Access-Control-Expose-Headers", "Authorization")
-    next()
-  })
-  app.use('/users', userRouter)
-  app.use('/users', cartRouter)
-  app.use('/items', productRouter)
-  app.use(
-    express.static("./static"),
-    express.json(),
-    express.urlencoded({
-      extended: true
-      }),
-      cors()
-  )
+app.use(cors({
+    origin: 'http://localhost:8080',
+    credentials: true
+}));
 
-//   Endpoints
-app.get('^/$|/home', (req, res) => {
-    res.status(200).sendFile(path.resolve('./static/html/index.html'))
-})
-app.get('*', (req, res) => {
+app.use(express.json());
+app.use(cookieParser());
+
+app.post('/login', authenticate, (req, res) => { 
+});
+
+app.delete('/logout', (req, res) => {
+    res.clearCookie('jwt')
     res.json({
-        status: 404,
-        msg: '❌ Resource not found.'
-    })
-})
-app.use(errorHandling)
-app.listen(port, () => {
-    console.log(`Live on port: ${port}`)
-})
+        msg : 'logged out successfully'
+    });
+});
+
+app.use('/products', productsRoute);
+app.use('/cart', cartRoute);
+app.use('/users', userRoute);
+
+app.listen(PORT, console.log(`server running on http://localhost:${PORT}`));
+
+
+
+
+
+// {
+//     "user_profile": "JohnDoe",
+//     "user_email": "JD1@gmail.com",
+//     "user_password": "john",
+//     "user_role": "admin",
+//     "user_image": "nothing"
+// }
+ 
+
+{/* <blockquote class="imgur-embed-pub" lang="en" data-id="a/PlyvO0z" data-context="false" ><a href="//imgur.com/a/PlyvO0z"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script> */}
+// https://i.imgur.com/8Pvhmao.mp4
