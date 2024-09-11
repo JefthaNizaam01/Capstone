@@ -24,16 +24,16 @@
             <input type="text" class="form-control" placeholder="product_price" aria-label="product_price" aria-describedby="addon-wrapping" v-model="product_price">
           </div>
           <div class="input-group flex-nowrap mb-2">
-            <span class="input-group-text" id="addon-wrapping" v-if="product_img.length === 0"><i class="fa-solid fa-image fa-xl" style="color: #ff0000;"></i></span>
+            <span class="input-group-text" id="addon-wrapping" v-if="productURL.length === 0"><i class="fa-solid fa-image fa-xl" style="color: #ff0000;"></i></span>
             <span class="input-group-text" id="addon-wrapping" v-else><i class="fa-regular fa-image fa-xl" style="color: #11ff00;"></i></span>
-            <input type="text" class="form-control" placeholder="product_image" aria-label="product_image" aria-describedby="addon-wrapping" v-model="product_img">
+            <input type="text" class="form-control" placeholder="product_image" aria-label="product_image" aria-describedby="addon-wrapping" v-model="productURL">
           </div>
           <div class="input-group flex-nowrap mb-2">
             <span class="input-group-text" id="addon-wrapping" v-if="product_category.length === 0"><i class="fa-solid fa-list fa-xl" style="color: #ff0000;"></i></span>
             <span class="input-group-text" id="addon-wrapping" v-else><i class="fa-solid fa-list fa-xl" style="color: #11ff00;"></i></span>
             <input type="text" class="form-control" placeholder="product_category" aria-label="product_category" aria-describedby="addon-wrapping" v-model="product_category">
           </div>
-          <button class="btn btn-outline-dark" v-if="product_img.length === 0 || product_name.length === 0 || product_price.length === 0 || product_desc.length === 0 || product_category.length === 0" disabled>fill in all input fields</button>
+          <button class="btn btn-outline-dark" v-if="productURL.length === 0 || product_name.length === 0 || product_price.length === 0 || product_desc.length === 0 || product_category.length === 0" disabled>fill in all input fields</button>
           <button @click="addProduct()" class="btn btn-outline-primary" v-else>Add product to Database <i class="fa-solid fa-database fa-bounce fa-xl" style="color: blue;"></i></button>
           <div id="errOnInput"></div>
         </div>
@@ -49,7 +49,7 @@ export default {
             product_name : '',
             product_desc : '',
             product_price : '',
-            product_img: '',
+            productURL: '',
             product_category : ''
         }
     },
