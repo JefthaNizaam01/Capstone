@@ -26,7 +26,7 @@
                     <hr class="my-3 mx-3"/>
                     
                     
-                    <addToCartBtn @click="addToCart(product.prodID)"/>
+                 
                 </div>
             </div>
         </div>
@@ -56,6 +56,7 @@ export default {
     min-height: 100vh;
     align-items: center;
     padding: 30px;
+    background-color: rgb(192, 185, 175);
 }
 
 #isoParent{
@@ -84,14 +85,7 @@ export default {
   font-size: 30px;
 }
 
-.rating:not(:checked) > label:before {
-  content: '★';
-  color: #ffa723;
-}
 
-.rating, label {
-  color: #ffa723;
-}
   
   
   

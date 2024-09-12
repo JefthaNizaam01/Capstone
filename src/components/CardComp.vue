@@ -58,12 +58,12 @@
           <p class="card-text">category: {{ product.category }}</p>
 
           <router-link
-            @click="fetchProduct(product.productID)"
-            :to="{ name: 'product', params: { productId: product.productID } }"
-            class="btn btn-dark"
-            v-if="$cookies.get('jwt')"
-            >details <i class="fa-regular fa-eye fa-sm" style="color: #ffffff;"></i
-          ></router-link>
+  @click="fetchProduct(product.prodID)"
+  :to="{ name: 'product', params: { prodID: product.prodID } }"
+  class="btn btn-dark mt-2 w-100"
+>
+  details <i class="fa-regular fa-eye fa-sm" style="color: #ffffff;"></i>
+</router-link>
         </div>
       </div>
     </div>
