@@ -25,7 +25,7 @@
             </div>
 
             <!-- Form with Validation -->
-            <form @submit.prevent="validateForm" action="https://formspree.io/f/mleqqlvy" method="POST">
+            <form ref="form" @submit.prevent="validateForm" action="https://formspree.io/f/mleqqlvy" method="POST">
               <h3 class="timeless-form-heading">How can we assist you?</h3>
 
               <div class="mb-3">
@@ -66,10 +66,10 @@
                 <small v-if="errors.message" class="text-danger">{{ errors.message }}</small>
               </div>
 
-              <div class="d-flex justify-content-between">
-                <button id="sub" type="submit" class="btn timeless-button mx-2">Submit</button>
-                <button id="clearer" type="reset" class="btn timeless-button mx-2">Clear</button>
-              </div>
+              <div class="d-flex justify-content-center">
+  <button id="sub" type="submit" class="btn timeless-button mx-2">Submit</button>
+  <button id="clearer" type="reset" class="btn timeless-button mx-2">Clear</button>
+</div>
             </form>
           </div>
         </div>
@@ -121,7 +121,12 @@ export default {
 
       // If form is valid, submit it
       if (valid) {
-        this.$refs.form.submit();
+        const formElement = this.$refs.form;
+        if (formElement) {
+          formElement.submit();
+        } else {
+          console.error('Form reference is not available.');
+        }
       }
     },
     validEmail(email) {
@@ -140,6 +145,7 @@ export default {
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
+  padding-bottom: 1rem; 
 }
 
 .timeless-heading {
@@ -156,7 +162,6 @@ export default {
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 2rem;
- 
 }
 
 .contact-details {
@@ -212,9 +217,8 @@ export default {
   display: flex;
 }
 
-.justify-content-between {
-  justify-content: flex-start;
-
+.justify-content-center {
+  justify-content: center;
 }
 
 .text-danger {
@@ -225,6 +229,4 @@ export default {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
-
-
 </style>
