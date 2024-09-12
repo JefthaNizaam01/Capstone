@@ -1,130 +1,254 @@
 <template>
-  <div id="about">
-    <div class="px-4 pt-5 my-5 text-center">
-      <h1 class="display-4 fw-bold text-body-emphasis" id="text">Take W's with W-store</h1>
-      <div class="col-lg-6 mx-auto">
-        <p class="lead mb-4 text-white">Welcome to W Store, your ultimate destination for cutting-edge gaming tech! Dive into the heart of the action with our array of high-powered gaming gear designed to elevate your gameplay to new heights. From lightning-fast processors to immersive virtual reality setups, we've got everything you need to conquer the digital realm like never before. Upgrade your gaming experience with W Store today!</p>
-        <router-link to="/products" class="btn mb-2 mx-1" id="button">Explore our store</router-link>
-        <router-link to="/" class="btn mb-2 mx-1" id="button">Contact our store</router-link>
-      </div>
-      <div class="overflow-hidden" style="max-height: 34.9vh;" id="hideBorder">
-        <div class="container px-5">
-          <img src="https://i.postimg.cc/9mMjX75j/pexels-tomasz-filipek-1637436.jpg" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
-        </div>
+  <div class="about">
+    <div class="about-image">
+      <img src="https://jefthanizaam01.github.io/favoriteimages/images/timeclock.jpg" alt="Elegant Watch">
+      <div class="clock">
+        <div class="second-hand"></div>
       </div>
     </div>
-    <div class="container px-4 py-5" id="hanging-icons">
-      <h2 class="pb-2 border-bottom text-white fw-bold text-white">Experience Gaming Excellence</h2>
-      <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-        <div class="col d-flex align-items-start">
-          <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-            <i class="fa-solid fa-gamepad fa-xl" style="color: #ffffff;"></i>
-          </div>
-          <div>
-            <h3 class="fs-2 text-white">High-End Tech</h3>
-            <p class="text-white">Unleash your gaming potential with top-of-the-line equipment meticulously curated by W Store. Elevate your gameplay with the latest innovations designed for ultimate performance.</p>
-            <a href="/products" class="btn btn-primary" id="button">
-              Explore Now
-            </a>
-          </div>
-        </div>
-        <div class="col d-flex align-items-start">
-          <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-            <i class="fa-solid fa-headset fa-xl" style="color: #ffffff;"></i>
-          </div>
-          <div>
-            <h3 class="fs-2 text-white">Exceptional Support</h3>
-            <p class="text-white">Experience unparalleled customer service with W Store's dedicated support team. Whether you need technical assistance or product guidance, we're here to ensure your gaming needs.</p>
-            <a href="/contact" class="btn btn-primary" id="button">
-              Contact us now
-            </a>
-          </div>
-        </div>
-        <div class="col d-flex align-items-start">
-          <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-            <i class="fa-solid fa-truck-ramp-box fa-xl" style="color: #ffffff;"></i>
-          </div>
-          <div>
-            <h3 class="fs-2 text-white">Swift Deliveries</h3>
-            <p class="text-white">Don't wait to dive into your gaming adventures. With W Store's lightning-fast delivery service, your gear arrives promptly, ensuring you're ready to dominate the digital battlefield in no time.</p>
-            <a href="/products" class="btn btn-primary" id="button">
-              Get Yours Now
-            </a>
-          </div>
-        </div>
-      </div>
+    <div class="about-content">
+      <header class="about-header">
+        <h1 class="animated-heading">About Us</h1>
+        <h2 class="animated-heading">
+          <span class="space-before">W</span>
+          <span class="space-before">h</span>
+          <span class="space-before">e</span>
+          <span class="space-before">r</span>
+          <span class="space-before">e</span>
+          <span class="space-mid"></span>
+          <span class="space-before">E</span>
+          <span class="space-before">v</span>
+          <span class="space-before">e</span>
+          <span class="space-before">r</span>
+          <span class="space-before">y</span>
+          <span class="space-mid"></span> 
+          <span class="space-before">S</span>
+          <span class="space-before">e</span>
+          <span class="space-before">c</span>
+          <span class="space-before">o</span>
+          <span class="space-before">n</span>
+          <span class="space-before">d</span>
+          <span class="space-mid"></span> 
+          <span class="space-before">C</span>
+          <span class="space-before">o</span>
+          <span class="space-before">u</span>
+          <span class="space-before">n</span>
+          <span class="space-before">t</span>
+          <span class="space-before">s</span>
+          <span class="space-end">.</span> 
+        </h2>
+      </header>
+      <section class="about-text">
+        <p>
+          At Timeless, we believe that every moment is precious. Our e-commerce store is dedicated to more than just selling watches; we are committed to celebrating the art of timekeeping. In a world where time seems to slip through our fingers faster than we realize, Timeless serves as a reminder to cherish each fleeting second.
+        </p>
+        <p>
+          At Timeless, we understand that time is one of the most valuable resources we have. We strive to offer you watches that are more than just accessories—they are symbols of the moments that shape our lives. Discover watches that resonate with your style and appreciate the beauty of time with Timeless.
+        </p>
+      </section>
     </div>
-    
-  <div>
-</div>
   </div>
 </template>
-<script>
-</script>
+
+
+
 <style scoped>
-#about{
+.about {
   display: flex;
-  justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: black;
-  flex-direction: column;
+  width: 100%;
+  background: linear-gradient(to bottom right, #3d3b39, #ece7e2);
+  padding: 40px;
 }
 
-#text {
-  background: #121FCF;
-  background: linear-gradient(to right, #121FCF 0%, #CF1512 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.about-image {
+  flex: 1;
+  max-width: 50%;
+  margin-right: 30px;
+  position: relative; 
 }
 
-#button {
-  position: relative;
-  display: inline-block;
-  background: linear-gradient(to bottom, #8439e6, #c75555);
-  color: white;
-  font-family: "Segoe UI", sans-serif;
+.about-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.clock {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px; 
+  height: 150px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.second-hand {
+  position: absolute;
+  width: 2px; 
+  height: 97px; 
+  background: #b9bcc1; 
+  top: -3.1%;
+  left: 50%;
+  transform-origin: bottom center;
+  transform: rotate(0deg);
+  animation: tick 60s linear infinite;
+  border-radius: 50% 50% 0 0;
+}
+
+.about-content {
+  flex: 1.5;
+  padding: 40px;
+  background-color: rgba(218, 208, 208, 0.95);
+  border-radius: 15px;
+  animation: fadeIn 2s ease-in-out;
+  border: 1px solid #e0dcd7;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.about-header {
+  margin-bottom: 36px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.about-header h1 {
+  font-size: 50px;
   font-weight: bold;
+  margin-bottom: 15px;
+  font-family: 'Playfair Display', serif;
+  color: #847272;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff;
+}
+
+.about-header h2 {
+  font-size: 30px;
+  font-weight: 300;
+  color: #666;
+  margin-bottom: 40px;
+  font-family: 'Garamond', serif;
+  font-style: italic;
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff;
+  word-spacing: 15px;
+}
+
+.about-text {
+  text-align: justify;
+}
+
+.about-text p {
+  margin-bottom: 20px;
   font-size: 18px;
-  border: none;
-  border-radius: 30px;
-  padding: 14px 28px;
-  cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  animation: btnHover 2s infinite;
-  transition: all 0.3s ease-in-out;
+  line-height: 1.6;
+  color: #555;
+  text-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white;
+  font-family: 'Georgia', serif;
 }
 
-#button:hover {
-  background: linear-gradient(to bottom, #472c63, #5b67b7);
-  animation: animation55 1s ease-in-out infinite;
-  transform: translateY(-2px);
-}
-
-
-#button:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-@keyframes btnHover {
+@keyframes fadeIn {
   0% {
-    background-position: left top;
+    opacity: 0;
+    transform: translateY(20px);
   }
-
   100% {
-    background-position: right bottom;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes animation55 {
+@keyframes textGlow {
   0% {
-    background-position: left top;
+    text-shadow: 0 0 5px #ccc, 0 0 10px #aaa, 0 0 15px #888;
   }
-
   100% {
-    background-position: right bottom;
+    text-shadow: 0 0 10px #fff, 0 0 20px #ccc, 0 0 30px #aaa;
   }
 }
+
+@keyframes tick {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    flex-direction: column;
+  }
+
+  .about-image {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .about-content {
+    width: 100%;
+  }
+}
+
+.animated-heading span {
+  display: inline-block;
+  opacity: 0;
+  animation: letterAnimation 1s forwards;
+  letter-spacing: 4px;
+}
+
+@keyframes letterAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.space-before {
+  margin-right: 3px;
+}
+
+.space-mid {
+  margin: 0 4px; 
+}
+
+.space-end {
+  margin-left: 3px; 
+}
+
+.animated-heading span:nth-child(1) { animation-delay: 0s; }
+.animated-heading span:nth-child(2) { animation-delay: 0.1s; }
+.animated-heading span:nth-child(3) { animation-delay: 0.2s; }
+.animated-heading span:nth-child(4) { animation-delay: 0.3s; }
+.animated-heading span:nth-child(5) { animation-delay: 0.4s; }
+.animated-heading span:nth-child(6) { animation-delay: 0.5s; }
+.animated-heading span:nth-child(7) { animation-delay: 0.6s; }
+.animated-heading span:nth-child(8) { animation-delay: 0.7s; }
+.animated-heading span:nth-child(9) { animation-delay: 0.8s; }
+.animated-heading span:nth-child(10) { animation-delay: 0.9s; }
+.animated-heading span:nth-child(11) { animation-delay: 1s; }
+.animated-heading span:nth-child(12) { animation-delay: 1.1s; }
+.animated-heading span:nth-child(13) { animation-delay: 1.2s; }
+.animated-heading span:nth-child(14) { animation-delay: 1.3s; }
+.animated-heading span:nth-child(15) { animation-delay: 1.4s; }
+.animated-heading span:nth-child(16) { animation-delay: 1.5s; }
+.animated-heading span:nth-child(17) { animation-delay: 1.6s; }
+.animated-heading span:nth-child(18) { animation-delay: 1.7s; }
+.animated-heading span:nth-child(19) { animation-delay: 1.8s; }
+.animated-heading span:nth-child(20) { animation-delay: 1.9s; }
+.animated-heading span:nth-child(21) { animation-delay: 2.1s; }
+.animated-heading span:nth-child(22) { animation-delay: 2.3s; }
+.animated-heading span:nth-child(23) { animation-delay: 2.5s; }
+.animated-heading span:nth-child(24) { animation-delay: 2.6s; }
+.animated-heading span:nth-child(25) { animation-delay: 2.7s; }
+.animated-heading span:nth-child(26) { animation-delay: 2.8s; }
 </style>
