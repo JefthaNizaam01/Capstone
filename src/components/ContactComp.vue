@@ -151,7 +151,6 @@ export default {
 .timeless-heading {
   font-family: 'Garamond', serif;
   color: #2c3e50;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   margin-bottom: 1.5rem;
   text-align: center;
 }
