@@ -223,9 +223,7 @@ export default {
   transition: transform 0.2s ease-in-out;
 }
 
-.card:hover {
-  transform: scale(1.02);
-}
+
 
 .card-img-top {
   border-radius: 8px 8px 0 0;
