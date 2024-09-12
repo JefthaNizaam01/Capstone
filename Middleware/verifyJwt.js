@@ -1,52 +1,56 @@
-import { config } from 'dotenv';
-config();
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'; // Ensure jwt is imported
 
-const auth = async (req, res, next) => {
-    const { cookie } = req.headers;
+// Generate JWT function
+const generateJWT = (user) => {
+    console.log("User object before JWT generation:", user); // Debugging line
+    const payload = {
+        emailAdd: user.emailAdd,
+        userRole: user.userRole,
+        userID: user.userID, // Ensure userID is included in the payload
+    };
 
-    if (!process.env.SECRET_KEY || !process.env.REFRESH_TOKEN) {
-        return res.status(500).send({ msg: 'SECRET_KEY or REFRESH_TOKEN not defined' });
+    try {
+        return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '1h' });
+    } catch (error) {
+        throw new Error('Error generating JWT: ' + error.message);
     }
-
-    let tokenInHeader = cookie && cookie.split('=')[1];
-
-    if (!tokenInHeader) {
-        return res.status(401).send({ msg: "No valid token" });
-    }
-
-    jwt.verify(tokenInHeader, process.env.SECRET_KEY, (err, user) => {
-        if (err) {
-            if (err.name === 'TokenExpiredError') {
-                const refreshToken = req.headers['refresh-token'];
-
-                if (refreshToken) {
-                    jwt.verify(refreshToken, process.env.REFRESH_TOKEN, (err, decoded) => {
-                        if (err) {
-                            return res.status(403).json({ error: 'Invalid refresh token' });
-                        } else {
-                            const newToken = jwt.sign(
-                                { emailAdd: decoded.emailAdd, userRole: decoded.userRole },
-                                process.env.SECRET_KEY,
-                                { expiresIn: '1h' }
-                            );
-
-                            res.setHeader('Authorization', newToken);
-                            next();
-                        }
-                    });
-                } else {
-                    return res.status(403).json({ error: 'Refresh token not found' });
-                }
-            } else {
-                return res.status(403).json({ error: 'Invalid token' });
-            }
-        } else {
-            req.emailAdd = user.emailAdd;
-            req.userRole = user.userRole;
-            next();
-        }
-    });
 };
 
-export default auth;
+// JWT Verification Middleware
+const auth = (req, res, next) => {
+    console.log("Verifying JWT...");
+
+    try {
+        const authHeader = req.headers.authorization;
+        let token;
+
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            token = authHeader.split(' ')[1];
+        } else {
+            token = req.cookies.jwt;
+        }
+
+        console.log(`Token received: ${token}`);
+
+        if (!token) {
+            console.log("No valid token found.");
+            return res.status(401).send({ msg: "No valid token" });
+        }
+
+        const user = jwt.verify(token, process.env.SECRET_KEY);
+        console.log("Token successfully verified:", user);
+        
+        if (!user.userID) {
+            console.log("UserID is missing in the decoded token");
+            return res.status(400).send({ msg: "UserID is missing in the decoded token" });
+        }
+
+        req.user = user; // Now req.user contains userID, emailAdd, userRole
+        next();
+    } catch (err) {
+        console.error('Token verification failed:', err);
+        return res.status(403).json({ error: 'Invalid or expired token' });
+    }
+};
+
+export { generateJWT, auth };

@@ -1,49 +1,91 @@
-import { getCart, addToCart, insert, removeFromCart, getProductByID, addedInCart } from "../Model/db.js";
+import { 
+    getCart, 
+    insert, 
+    removeFromCart, 
+    getProductByID, 
+    addedInCart, 
+    editCart, 
+    checkProfile, 
+    deleteSpecificItem, 
+    getAllCarts
+} from "../Model/db.js";
 
-export default {
-    allCartItems : async (req, res) => {
+const cartController = {
+    // Admin can fetch all carts
+    allCarts: async (req, res) => {
         try {
-            res.send(await getCart())
+            console.log(`Fetching all carts for Admin user: ${req.user.emailAdd}`);
+            const carts = await getAllCarts();
+            return res.status(200).json(carts);
         } catch (error) {
-            res.status(404).json({
-                msg: "Route does not exist or server is down!"
-            })
+            console.error('Error fetching all carts:', error);
+            return res.status(500).json({ msg: "Unable to retrieve carts. Please try again later." });
         }
     },
-    itemsInCart: async (req, res) => {
+
+    // All users can access their cart items
+    allCartItems: async (req, res) => {
         try {
-            let data = await addedInCart(+req.params.id)
-            res.send({
-                products : data
-            })
+            const userProfile = await checkProfile(req.user.emailAdd);
+            const cartItems = await getCart(userProfile.userID);
+            return res.status(200).json({ products: cartItems });
         } catch (error) {
-            res.status(404).json({
-                msg: "The item you are looking for doesn't exist"
-            })
+            return res.status(500).json({ msg: "Unable to retrieve cart items. Please try again later." });
         }
     },
-    addToCartTable : async (req, res) => {
+
+    // Users can add items to their cart
+    addToCartTable: async (req, res) => {
         try {
-            let { quantity } = req.body
-            const [product] = await getProductByID(+req.params.id);
-            let { userID } = req.query
-            await insert(+req.params.id, userID, quantity)
-            res.send(await addedInCart(+req.params.id));
+            const { quantity } = req.body;
+            const product = await getProductByID(+req.params.productID);
+            const userProfile = await checkProfile(req.user.emailAdd);
+
+            await insert(product.productID, userProfile.userID, quantity);
+            const updatedCart = await addedInCart(userProfile.userID);
+            return res.status(201).json(updatedCart);
         } catch (error) {
-            res.status(404).json({
-                msg: "The item you are looking for doesn't exist"
-            })
+            return res.status(500).json({ msg: "Unable to add item to cart. Please try again later." });
         }
     },
-    deleteFromCart : async (req, res) => {
+
+    // Users can remove items from their cart
+    deleteFromCart: async (req, res) => {
         try {
-            let { userID } = req.query
-            await removeFromCart(+req.params.id, userID)
-            res.send(await getCart())
+            const userProfile = await checkProfile(req.user.emailAdd);
+            await removeFromCart(+req.params.productID, userProfile.userID);
+            const updatedCart = await getCart(userProfile.userID);
+            return res.status(200).json(updatedCart);
         } catch (error) {
-            res.status(404).json({
-                msg: "The item you are looking for doesn't exist"
-            })
+            return res.status(500).json({ msg: "Unable to remove item from cart. Please try again later." });
         }
-    } 
-} 
+    },
+
+    // Users can edit their cart
+    editCart: async (req, res) => {
+        try {
+            const { productID, quantity } = req.body;
+            const cartID = +req.params.cartItemId;
+            const userProfile = await checkProfile(req.user.emailAdd);
+
+            await editCart(productID, userProfile.userID, quantity, cartID);
+            const updatedCart = await getCart(userProfile.userID);
+            return res.status(200).json(updatedCart);
+        } catch (error) {
+            return res.status(500).json({ msg: error.message || "Unable to update cart item. Please try again later." });
+        }
+    },
+
+    deleteSpecificItem: async (req, res) => {
+        try {
+            const userProfile = await checkProfile(req.user.emailAdd);
+            await deleteSpecificItem(+req.params.cartItemId, userProfile.userID);
+            const updatedCart = await getCart(userProfile.userID);
+            return res.status(200).json(updatedCart);
+        } catch (error) {
+            return res.status(500).json({ msg: "Unable to delete item from cart. Please try again later." });
+        }
+    }
+};
+
+export default cartController;

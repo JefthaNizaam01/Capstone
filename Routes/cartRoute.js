@@ -1,17 +1,17 @@
 import express from 'express';
-import controller from '../Controllers/cartController.js'
+import cartController from '../Controllers/cartController.js';
+import authenticate from '../Middleware/signToken.js'; // Authentication middleware
 
+const router = express.Router();
 
-const router = express.Router()
+// Ensure users are authenticated to access cart functionality
+router.use(authenticate);
 
-router.route('/')
-    .get(controller.allCartItems)
-    
-    
-    router.route('/:id')
-    .get(controller.itemsInCart)
-    .post(controller.addToCartTable)
-    .delete(controller.deleteFromCart)
-
+// Define the cart routes that are accessible by registered users
+router.get('/user/:id/carts', cartController.allCartItems);
+router.post('/user/:id/cart', cartController.addToCartTable);
+router.patch('/user/:id/cart/:cartItemId', cartController.editCart);
+router.delete('/user/:id/cart', cartController.deleteFromCart);
+router.delete('/user/:id/cart/:cartItemId', cartController.deleteSpecificItem);
 
 export default router;

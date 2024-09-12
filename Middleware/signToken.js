@@ -1,59 +1,64 @@
-import { config } from 'dotenv';
-config();
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import { checkUser, checkProfile } from '../Model/db.js';
+import { generateJWT } from '../Middleware/verifyJwt.js'; // Ensure correct import
+import jwt from 'jsonwebtoken';
+import { checkUser, checkProfile } from '../Model/db.js'; // Assuming these functions are defined
 
 const authenticate = async (req, res, next) => {
-    const { username, emailAdd, passw, userRole } = req.body;
+    const { emailAdd, passw } = req.body;
+
+    console.log("Starting authentication process...");
 
     try {
-        const hashedPwd = await checkUser(emailAdd, userRole);  // Fetch hashed password
-        const validUserIsLoggedIn = await checkProfile(emailAdd);  // Verify user profile
+        const hashedPassw = await checkUser(emailAdd);
+        console.log(`Fetched hashed password for ${emailAdd}: ${hashedPassw}`);
 
-        if (!hashedPwd) {
-            return res.status(404).send({ msg: 'User not found' });
+        if (!hashedPassw) {
+            console.log("User not found.");
+            return res.status(401).send({ msg: 'User not found' });
         }
 
-        if (!process.env.SECRET_KEY || !process.env.REFRESH_TOKEN) {
-            throw new Error('SECRET_KEY or REFRESH_TOKEN not defined in environment variables');
-        }
+        const validUserIsLoggedIn = await checkProfile(emailAdd);
+        console.log("User profile details:", validUserIsLoggedIn);
 
-        const match = await bcrypt.compare(passw, hashedPwd);  // Compare password
-        if (match) {
-            const token = jwt.sign(
-                { emailAdd, userRole },
-                process.env.SECRET_KEY,
-                { expiresIn: '1h' }
-            );
+        const result = await bcrypt.compare(passw, hashedPassw);
+        console.log(`Password comparison result for ${emailAdd}: ${result}`);
 
-            const refreshToken = jwt.sign(
-                { emailAdd, userRole },
-                process.env.REFRESH_TOKEN,
-                { expiresIn: '1d' }
-            );
+        if (result) {
+            const userRole = validUserIsLoggedIn.userRole;
+            const userID = validUserIsLoggedIn.userID;
+            const username = validUserIsLoggedIn.username;
 
-            // Set cookies with tokens
-            res.cookie('jwt', token, { httpOnly: true, maxAge: 3600000 });  // 1 hour
-            res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 86400000 });  // 1 day
+            if (!userID) {
+                console.log("UserID is missing in user profile");
+                return res.status(400).send({ msg: "UserID is missing in user profile" });
+            }
 
-            res.send({
+            console.log("Generating JWT with userID:", userID);
+            const token = generateJWT({ emailAdd, userRole, userID }); // Generate JWT with userID
+            const refreshToken = jwt.sign({ emailAdd, userRole, userID }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1d' });
+
+            console.log(`Generated JWT for ${emailAdd}:`, token);
+            console.log(`Generated refresh token for ${emailAdd}:`, refreshToken);
+
+            res.cookie('jwt', token, { httpOnly: true, maxAge: 3600000 });
+            res.cookie('refreshToken', refreshToken, { httpOnly: true, maxAge: 86400000 });
+
+            return res.send({
                 token,
                 refreshToken,
                 role: userRole,
                 email: emailAdd,
                 name: username,
                 isLogged: validUserIsLoggedIn,
-                msg: 'You logged in successfully'
+                msg: 'You are logged in'
             });
-
-            next();
         } else {
-            res.status(401).send({ msg: 'Incorrect password' });
+            console.log("Password does not match.");
+            return res.status(401).send({ msg: 'Password does not match' });
         }
     } catch (error) {
         console.error('Error during authentication:', error);
-        res.status(500).send({ msg: 'Internal server error' });
+        return res.status(500).send({ msg: 'Internal server error' });
     }
 };
 
