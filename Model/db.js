@@ -11,7 +11,7 @@ const getProducts = async() => {
 // returns product by an id
 const getProductByID = async (id) => {
     const [product] = await pool.query(`
-        SELECT * FROM products WHERE productID = ?
+        SELECT * FROM products WHERE prodID = ?
     `, [id]);
 
     if(!id || isNaN(id) || id > product){
@@ -24,16 +24,16 @@ const getProductByID = async (id) => {
 }
 
 
-const editProduct = async (productName, productDesc, amount, productURL, category, productID) => {
+const editProduct = async (productName, productDesc, amount, productURL, category, prodID) => {
     const [product] = await pool.query(`
-        UPDATE products SET productName = ?, productDesc = ?, amount = ?, productURL = ?, category = ? WHERE productID = ?
-    `, [productName, productDesc, amount, productURL, category, productID]);
+        UPDATE products SET productName = ?, productDesc = ?, amount = ?, productURL = ?, category = ? WHERE prodID = ?
+    `, [productName, productDesc, amount, productURL, category, prodID]);
 }
 
 
 const deleteProduct = async(id) => {
     const [product] = await pool.query(`
-    DELETE FROM products WHERE productID =?
+    DELETE FROM products WHERE prodID =?
     `, [id]);
     if(!id || isNaN(id) || id > product){
 
@@ -68,11 +68,11 @@ const addedInCart = async (userID) => {
             (cart.quantity * products.amount) AS total_price,
             products.productURL AS prodUrl,
             products.productName AS prodName,
-            products.productID AS prodID
+            products.prodID AS prodID
         FROM 
             cart
         JOIN 
-            products ON cart.productID = products.productID
+            products ON cart.prodID = products.prodID
         WHERE 
             cart.userID = ?
     `, [userID]);
@@ -80,12 +80,12 @@ const addedInCart = async (userID) => {
     return cartItems;
 }
 
-const addToCart = async (productID, userID) => {
+const addToCart = async (prodID, userID) => {
     // Check if the product is already in the cart
     const [existingProduct] = await pool.query(`
         SELECT * FROM cart
-        WHERE productID = ? AND userID = ?
-    `, [productID, userID]);
+        WHERE prodID = ? AND userID = ?
+    `, [prodID, userID]);
 
     if (existingProduct.length > 0) {
 
@@ -95,31 +95,31 @@ const addToCart = async (productID, userID) => {
         await pool.query(`
             UPDATE cart
             SET quantity = ?
-            WHERE productID = ? AND userID = ?
-        `, [updatedQuantity, productID, userID]);
+            WHERE prodID = ? AND userID = ?
+        `, [updatedQuantity, prodID, userID]);
 
     } else {
 
         // Insert the product into the cart
         await pool.query(`
-            INSERT INTO cart (productID, userID, quantity)
+            INSERT INTO cart (prodID, userID, quantity)
             VALUES (?, ?, 1)
-        `, [productID, userID]);
+        `, [prodID, userID]);
 
     }
 }
 
-const insert = async(productID, userID) => {
+const insert = async(prodID, userID) => {
     // Call the addToCart function to add the product to the cart
-    await addToCart(productID, userID);
+    await addToCart(prodID, userID);
 }
 
-const removeFromCart = async (productID, userID) => {
+const removeFromCart = async (prodID, userID) => {
     // Check if the product is already in the cart
     const [existingProduct] = await pool.query(`
         SELECT * FROM cart
-        WHERE productID = ? AND userID = ?
-    `, [productID, userID]);
+        WHERE prodID = ? AND userID = ?
+    `, [prodID, userID]);
 
     if (existingProduct.length > 0) {
         // Decrease the quantity of the existing product in the cart
@@ -129,15 +129,15 @@ const removeFromCart = async (productID, userID) => {
             // If the updated quantity is less than or equal to zero, remove the product from the cart
             await pool.query(`
                 DELETE FROM cart
-                WHERE productID = ? AND userID = ?
-            `, [productID, userID]);
+                WHERE prodID = ? AND userID = ?
+            `, [prodID, userID]);
         } else {
             // Update the quantity of the existing product in the cart
             await pool.query(`
                 UPDATE cart
                 SET quantity = ?
-                WHERE productID = ? AND userID = ?
-            `, [updatedQuantity, productID, userID]);
+                WHERE prodID = ? AND userID = ?
+            `, [updatedQuantity, prodID, userID]);
         }
     }
 }
@@ -265,19 +265,19 @@ export {getProducts, getProductByID, editProduct, deleteProduct, addProduct, get
 
 
 
-// const addToCart = async (productID) => {
+// const addToCart = async (prodID) => {
 //     const [addToCart] = await pool.query(`
 //         SELECT * FROM products
-//         INNER JOIN cart ON products.productID = cart.productID
+//         INNER JOIN cart ON products.prodID = cart.prodID
 //         WHERE cart.userID = ?
-//     `, [productID]);
+//     `, [prodID]);
 //     return addToCart
 // }
 // // console.log(await addToCart(1))
 
-// const insert = async(productID, userID, quantity) => {
+// const insert = async(prodID, userID, quantity) => {
 //     const [result] = await pool.query(`
-//       INSERT INTO cart (productID, userID, quantity) VALUES (?,?,?)
-//     `,[productID, userID, quantity])
+//       INSERT INTO cart (prodID, userID, quantity) VALUES (?,?,?)
+//     `,[prodID, userID, quantity])
 //     return addToCart()
 // }
