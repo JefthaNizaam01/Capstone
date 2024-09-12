@@ -3,8 +3,9 @@
       <div class="container col-xl-10 col-xxl-8 px-4 py-5">
           <div class="row align-items-center g-lg-5 py-5">
               <div class="col-lg-7 text-center text-lg-start">
-                  <h1 class="display-4 fw-bold lh-1 text-white mb-3">Sign up now with W store</h1>
-                  <p class="col-lg-10 fs-4 text-white">Get unlimited access to W-store's latest product, sign up and get started with us!</p>
+                <h1 class="display-4 fw-bold lh-1 text-white mb-3 text-shadow">Sign up now with Timeless</h1>
+<p class="col-lg-10 fs-4 text-white text-shadow">Join Timeless: Where Every Second Counts for Exclusive Offers!</p>
+
               </div>
               <div class="col-md-10 mx-auto col-lg-5" id="bgForm">
                   <div class="form-floating mb-3">
@@ -93,12 +94,12 @@ export default {
 
 <style scoped>
 
-#landing{
+#landing {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-image: url('https://cdn-images.imagevenue.com/fe/e9/59/ME17RH4H_o.png');
+  background-image: url('https://jefthanizaam01.github.io/favoriteimages/images/signup.jpg');
   min-height: 100vh !important;
   background-size: cover;
   background-repeat: no-repeat;
@@ -106,29 +107,36 @@ export default {
   border-image: fill 0 linear-gradient(rgba(0, 0, 0, 0.147) 50%, rgba(0, 0, 0, 0.068));
 }
 
-#bgForm{
-  background-color: #5005f346;
+#bgForm {
+  background-color: rgba(235, 231, 240, 0.7); /* Added opacity to improve contrast */
   padding-top: 20px;
   padding-bottom: 20px;
-  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-radius: 20px;
 }
 
-[data-inp]{
+[data-inp] {
   box-shadow: 2px 2px 14px 2px rgba(0, 0, 0, 0.375);
-  background-color: rgba(0, 255, 255, 0);
-  color: whitesmoke;
+  background-color: white;
+  color: black; /* Changed text color to ensure readability */
 }
 
-#btn{
-  background-color: rgb(0, 149, 255);
+#btn {
+  background-color: rgb(218, 225, 230);
   font-weight: 600;
-  color: whitesmoke;
-  text-shadow: -2px 5px 6px rgb(0, 18, 217);
+  color: rgb(24, 21, 21);
 }
-#btn:hover{
+
+#btn:hover {
   transform: scale(110%);
 }
+
+.text-danger {
+  color: red; /* Ensure error messages are clearly visible */
+}
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds shadow to the text */
+}
+
     
 </style>
