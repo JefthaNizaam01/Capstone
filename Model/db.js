@@ -144,24 +144,14 @@ const removeFromCart = async (productID, userID) => {
 
 
 
-// user verification
+// user verification ============
+
 const checkUser = async (emailAdd, userRole) => {
-    try {
-        const [rows] = await pool.query(`
-            SELECT passw FROM users WHERE emailAdd = ? AND userRole = ?
-        `, [emailAdd, userRole]);
-
-        if (rows.length === 0) {
-            return null;  // No user found
-        }
-
-        return rows[0].passw;  // Return the hashed password
-    } catch (error) {
-        console.error('Error in checkUser:', error);
-        throw error;
-    }
-};
-
+    const [[{passw}]] = await pool.query(`
+        SELECT passw FROM users WHERE emailAdd = ? AND userRole = ?
+    `, [emailAdd, userRole])
+    return passw
+}
 
 // user settings
 
