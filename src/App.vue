@@ -21,14 +21,5 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-}
-::-webkit-scrollbar{
-  width: 0px !important;
-}
+ <style src="@/assets/css/style.css">
 </style>
