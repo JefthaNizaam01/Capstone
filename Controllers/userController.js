@@ -15,7 +15,7 @@ export default {
             res.send(await getUserByID(+req.params.id))
         } catch (error) {
             res.status(404).json({
-                msg: "Unable to get a user that does not exist"
+                msg: "Unable to get user that does not exist"
             })
         }
     },
