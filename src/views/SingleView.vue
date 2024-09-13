@@ -24,7 +24,7 @@
                     </div>
                     <h3 class="text-center mx-2 px-1 text-decoration-underline">Price: R{{ product.amount }}</h3>
                     <hr class="my-3 mx-3"/>
-                    
+                    <addToCartBtn @click="() => addToCart(product.prodID, userID)" :userID="userID"/>
                     
                  
                 </div>
@@ -34,11 +34,17 @@
 </template>
 <script>
 import addToCartBtn from '../components/addToCartBtn.vue'
+
 export default {
-    components : {
+    components: {
         addToCartBtn
     },
-    methods : {
+    data() {
+        return {
+            userID: 'userID' // Replace this with the actual userID
+        }
+    },
+    methods: {
         fetchProduct(prodID){
             this.$store.dispatch('fetchProduct', prodID)
         },

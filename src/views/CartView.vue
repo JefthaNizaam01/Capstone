@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-5 pt-5" v-if="$cookies.get('jwt')">
+    <div class="mt-5 pt-5 pe-5" v-if="$cookies.get('jwt')">
         <div class="d-flex justify-content-center">
             <input type="search" class="form-control form-control-dark mx-3 w-50 mb-2" placeholder="Search..." aria-label="Search" v-model="search">
         </div>
@@ -11,43 +11,23 @@
             <router-link to="/products" class="btn bg-black text-white" id="router">
                 <i class="fa-solid fa-basket-shopping fa-lg" style="color: #ffffff;"></i> Continue shopping
             </router-link>
-            <button type="button" class="btn bg-black text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fa-regular fa-user fa-lg" style="color: #ffffff;"></i> Your profile
-            </button>
-            <button class="btn bg-black text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-                <i class="fa-regular fa-heart fa-lg" style="color: #ffffff;"></i> Your favourites
-            </button>
-        </div>
-
-        <!-- Favourites Offcanvas -->
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Favourites <i class="fa-regular fa-heart fa-sm" style="color: #ff0000;"></i></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body" v-for="i in favourites" v-bind:key="i.productID" id="scroll">
-                <p>{{ i.productName }}</p>
-                <img :src="i.prodUrl" height="50" width="50" loading="lazy" class="img img-fluid shadow mx-2 border p-1 my-4"/>
-            </div>
         </div>
 
         <!-- Cart Items -->
-        <div v-for="cart in filteredCart" v-bind:key="cart.productID" class="mt-3" id="cart">
+        <div v-for="cart in filteredCart" v-bind:key="cart.prodName" class="mt-3" id="cart">
             <div id="img" class="container">
                 <img :src="cart.prodUrl" height="200" width="200" loading="lazy" class="img img-fluid shadow mx-2 border p-1 my-4"/>
             </div>
             <div id="borderLR" class="mx-3 container">
                 <div class="fw-bold py-3 my-3 px-4">
-                    <div id="productName"><span>Name:</span> {{ cart.productName }}</div>
+                    <div id="productName"><span>Name:</span> {{ cart.prodName }}</div>
                 </div>
                 <div class="py-1 my-3 px-2">
                     <div id="prodPrice"><span>Price:</span> R{{ cart.amount }}</div>
                 </div>
                 <div class="py-2 my-3 px-4 d-flex gap-2 border-top">
-                    <button @click="addToFavs(cart)" class="btn bg-white shadow border text-white" :title="'add ' + cart.productName + ' to favourites'">
-                        <i class="fa-regular fa-heart fa-lg fa-beat" style="color: #ff0000;"></i>
-                    </button>
-                    <button @click="deleteFromCart(cart.productID)" class="btn bg-black text-white w-100">Decrease quantity</button>
+                    <!-- Removed the favorites button -->
+                    <button @click="deleteFromCart(cart.prodID)" class="btn bg-black text-white w-100">Decrease quantity</button>
                 </div>
             </div>
             <div class="py-3 my-1 px-4">
@@ -81,16 +61,21 @@ export default {
     computed: {
         filteredCart() {
             let cartItems = this.$store.state.cartState;
+
+            // Ensure productName exists and is a string
             if (this.search) {
-                cartItems = cartItems.filter(cart =>
-                    cart.productName.toLowerCase().includes(this.search.toLowerCase())
-                );
+                cartItems = cartItems.filter(cart => {
+                    const productName = cart.productName || '';
+                    return productName.toLowerCase().includes(this.search.toLowerCase());
+                });
             }
+
             if (this.sortAsc) {
                 cartItems.sort((a, b) => a.amount - b.amount);
             } else {
                 cartItems.sort((a, b) => b.amount - a.amount);
             }
+
             return cartItems;
         },
         favourites() {
@@ -103,9 +88,9 @@ export default {
                 .catch(err => {
                     console.error('Error fetching cart:', err);
                 });
-        }, 
-        deleteFromCart(productID) {
-            this.$store.dispatch('removeFromCart', productID)
+        },
+        deleteFromCart(prodID) {
+            this.$store.dispatch('removeFromCart', prodID)
                 .catch(err => {
                     console.error('Error removing from cart:', err);
                 });
@@ -132,83 +117,71 @@ export default {
 <style scoped>
 #FourOFour {
     text-align: center;
-    color: red;
+    color: rgb(10, 9, 9);
 }
-</style>
 
-<style>
-
-
-#cart{
+#cart {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: center;
-    border-left: 10px solid purple;
+    border-radius: 8px; /* Added rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+ /* Added a light background */
+    transition: border-color 0.3s ease-in-out; 
+    text-align: center; 
+    background-color: #d2c9c2;/* Center text inside cart item *//* Smooth transition for hover effect */
 }
 
-#cart:hover{
-    border-left: 10px solid rgb(0, 149, 242);
-    transition: all 0.2s ease-in-out;
-}
 
-#scroll{
-    max-height: 100vh;
-    overflow: scroll;
-}
 
-#borderLR{
-    /* border-left: 4px solid rgb(188, 13, 188);
-    border-right: 4px solid rgb(188, 13, 188); */
+#borderLR {
     margin-top: 20px;
     margin-bottom: 20px;
-    /* margin-left: 20px; */
 }
 
-#prodTotal{
-    background-color: whitesmoke;
-    border-radius: 20px;
-    transition: 1s ease-in;
-    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.211);
-    z-index: 2 !important;
+#prodTotal {
+    background-color: #eaeaea; /* Light background for the total price */
+    border-radius: 12px; /* More rounded corners */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 10px;
 }
 
-#FourOFour{
+#prodTotal:hover {
+    background-color: #d0d0d0; /* Light hover effect */
+}
+
+#FourOFour {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Arial', sans-serif; /* Changed font for a cleaner look */
 }
 
-
 @media (max-width: 998px) {
-    #cart{
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        border: none;
+    #cart {
+        flex-direction: column;
+        border-left: none; /* Removed border for smaller screens */
     }
 }
 @media (max-width: 558px) {
-    #router,div, button, i{
-        font-size: 12px !important;
+    #router, div, button, i {
+        font-size: 14px; /* Adjusted font sizes for smaller screens */
     }
 }
 @media (max-width: 358px) {
-    #router,div, button, i{
-        font-size: 10px !important;
+    #router, div, button, i {
+        font-size: 12px;
     }
 }
 @media (max-width: 301px) {
-    #router,div, button{
-        font-size: 8px !important;
+    #router, div, button {
+        font-size: 10px;
     }
-    i{
-        font-size: 10px !important;
+    i {
+        font-size: 8px;
     }
 }
-    
 </style>
