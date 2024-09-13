@@ -31,11 +31,11 @@
 <script>
 export default {
   props: {
-    productId: {
+    prodID: {
       type: Number,
       required: true
     },
-    userId: {
+    userID: {
       type: Number,
       required: true
     }
@@ -43,11 +43,51 @@ export default {
   methods: {
     addToCart() {
       // Logic to add the product to the cart
-      this.$store.dispatch('addToCart', { userId: this.userId, productId: this.productId });
+      this.$store.dispatch('addToCart', { userID: this.userID, prodID: this.prodID });
     }
   }
 };
 </script>
 
 <style scoped>
+.button {
+  line-height: 1;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .75rem;
+  background-color: black;
+  color: #fff;
+  border-radius: 10rem;
+  font-weight: 600;
+  padding: .75rem 1.5rem;
+  padding-left: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button__icon-wrapper {
+  flex-shrink: 0;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  color: black;
+  background-color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.button:hover {
+  background-color: #000;
+}
+
+.button:hover .button__icon-wrapper {
+  color: #000;
+}
+
+
+
 </style>

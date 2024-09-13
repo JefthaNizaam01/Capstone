@@ -44,7 +44,7 @@ const routes = [
   },
   {
     path: '/users/:userId',
-    name: 'admi',
+    name: 'admin',
     component: () => import('../views/SingleUserView.vue')
   },
   {

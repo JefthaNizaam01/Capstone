@@ -37,13 +37,14 @@
             >Contact</router-link
           >
           <router-link
-            class="nav-link"
-            id="cartXYZ"
-            to="/cart"
-            v-if="$cookies.get('jwt') && $cookies.get('jwt') !== null"
-            ><i class="fa-solid fa-cart-shopping fa-lg" style="color: #0497c9;"></i>
-            <span>{{ cartItemCount }}</span>
-          </router-link>
+  class="nav-link"
+  id="cartXYZ"
+  to="/cart"
+  v-if="$cookies.get('jwt') && $cookies.get('jwt') !== null"
+>
+  <i class="fa-solid fa-cart-shopping fa-lg" style="color: black;"></i>
+  <span style="color: black;">{{ cartItemCount }}</span>
+</router-link>
           <button
             v-if="$cookies.get('jwt') && $cookies.get('jwt') !== null"
             @click="logOut"
