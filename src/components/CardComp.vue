@@ -62,7 +62,7 @@
   :to="{ name: 'product', params: { prodID: product.prodID } }"
   class="btn btn-dark mt-2 w-100"
 >
-  details <i class="fa-regular fa-eye fa-sm" style="color: #ffffff;"></i>
+  View <i class="fa-regular fa-eye fa-sm" style="color: #ffffff;"></i>
 </router-link>
         </div>
       </div>
