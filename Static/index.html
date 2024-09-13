@@ -3,114 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSAS</title>
-</head>
-<body>
-
-    <div class="container">
-        <h1>OSAS Api</h1>
-    </div>
-
-  
-        <div class="dividerOne"></div>
-
-
-    <table>
-        <tr>
-            <td>Functionality :</td>
-            <td>Url link</td>
-            <td>Method</td>
-        </tr>
-        <tr>
-            <td>AddToCart :</td>
-            <td>http://localhost:3310/cart/:product_id<b>?user_id=3</b></td>
-            <td>post/id?user_id=?</td>
-        </tr>
-        <tr>
-            <td>delFromCart :</td>
-            <td>http://localhost:3310/cart/:id</td>
-            <td>Delete</td>
-        </tr>
-        <tr>
-            <td>Login :</td>
-            <td>http://localhost:3310/login</td>
-            <td>Post</td>
-        </tr>
-        <tr>
-            <td>Logout :</td>
-            <td>http://localhost:3310/logout</td>
-            <td>delete</td>
-        </tr>
-        <tr>
-            <td>singleProduct :</td>
-            <td>http://localhost:3310/products/:id</td>
-            <td>Get</td>
-        </tr>
-        <tr>
-            <td>getAllProducts :</td>
-            <td>http://localhost:3310/products</td>
-            <td>Get</td>
-        </tr>
-        <tr>
-            <td>deleteProduct :</td>
-            <td>http://localhost:3310/products/:id</td>
-            <td>Delete</td>
-        </tr>
-        <tr>
-            <td>editProduct :</td>
-            <td>http://localhost:3310/products/:id</td>
-            <td>Patch</td>
-        </tr>
-        <tr>
-            <td>getAllUsers :</td>
-            <td>http://localhost:3310/users</td>
-            <td>Get</td>
-        </tr>
-        <tr>
-            <td>getUser :</td>
-            <td>http://localhost:3310/users/:id</td>
-            <td>Get</td>
-        </tr>
-        <tr>
-            <td>editUser :</td>
-            <td>http://localhost:3310/users/:id</td>
-            <td>Patch</td>
-        </tr>
-        <tr>
-            <td>addUser :</td>
-            <td>http://localhost:3310/users</td>
-            <td>Post</td>
-        </tr>
-        <tr>
-            <td>deleteUser :</td>
-            <td>http://localhost:3310/users/:id</td>
-            <td>Delete</td>
-        </tr>
-    </table>
-
+    <title>Timeless</title>
     <style>
-        body{
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             display: flex;
             justify-content: center;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
-        .container{
-            display: flex;
-            justify-content: center;
+        .container {
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .dividerOne{
+        h1 {
+            color: #333;
+            margin: 0;
+            padding: 10px 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .dividerOne {
             height: 5px;
-            width: 30%;
-            background: linear-gradient(to left,rgb(0, 255, 238) 50%, green 50%);
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
+            width: 50%;
+            background-color: #ddd;
+            margin-bottom: 20px;
+            border-radius: 5px;
         }
-        td {
-            border: 1px solid black;
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f8f8;
+            color: #333;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        td a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        td a:hover {
+            text-decoration: underline;
+        }
+      
     </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Timeless API Endpoints</h1>
+    </div>
+
+    <div class="dividerOne"></div>
+
+    <table>
+        <tr>
+            <th>Functionality</th>
+            <th>URL Link</th>
+            <th>Method</th>
+        </tr>
+        <tr>
+            <td>AddToCart</td>
+            <td><a href="https://capstone-19.onrender.com/cart/:product_id">https://capstone-19.onrender.com/cart/:product_id</a></td>
+            <td>POST</td>
+        </tr>
+        <tr>
+            <td>delFromCart</td>
+            <td><a href="https://capstone-19.onrender.com/cart/:id">https://capstone-19.onrender.com/cart/:id</a></td>
+            <td>DELETE</td>
+        </tr>
+        <tr>
+            <td>Login</td>
+            <td><a href="https://capstone-19.onrender.com/login">https://capstone-19.onrender.com/login</a></td>
+            <td>POST</td>
+        </tr>
+        <tr>
+            <td>Logout</td>
+            <td><a href="https://capstone-19.onrender.com/logout">https://capstone-19.onrender.com/logout</a></td>
+            <td>DELETE</td>
+        </tr>
+        <tr>
+            <td>singleProduct</td>
+            <td><a href="https://capstone-19.onrender.com/products/:id">https://capstone-19.onrender.com/products/:id</a></td>
+            <td>GET</td>
+        </tr>
+        <tr>
+            <td>getAllProducts</td>
+            <td><a href="https://capstone-19.onrender.com/products">https://capstone-19.onrender.com/products</a></td>
+            <td>GET</td>
+        </tr>
+        <tr>
+            <td>deleteProduct</td>
+            <td><a href="https://capstone-19.onrender.com/products/:id">https://capstone-19.onrender.com/products/:id</a></td>
+            <td>DELETE</td>
+        </tr>
+        <tr>
+            <td>editProduct</td>
+            <td><a href="https://capstone-19.onrender.com/products/:id">https://capstone-19.onrender.com/products/:id</a></td>
+            <td>PATCH</td>
+        </tr>
+        <tr>
+            <td>getAllUsers</td>
+            <td><a href="https://capstone-19.onrender.com/users">https://capstone-19.onrender.com/users</a></td>
+            <td>GET</td>
+        </tr>
+        <tr>
+            <td>getUser</td>
+            <td><a href="https://capstone-19.onrender.com/users/:id">https://capstone-19.onrender.com/users/:id</a></td>
+            <td>GET</td>
+        </tr>
+        <tr>
+            <td>editUser</td>
+            <td><a href="https://capstone-19.onrender.com/users/:id">https://capstone-19.onrender.com/users/:id</a></td>
+            <td>PATCH</td>
+        </tr>
+        <tr>
+            <td>addUser</td>
+            <td><a href="https://capstone-19.onrender.com/users">https://capstone-19.onrender.com/users</a></td>
+            <td>POST</td>
+        </tr>
+        <tr>
+            <td>deleteUser</td>
+            <td><a href="https://capstone-19.onrender.com/users/:id">https://capstone-19.onrender.com/users/:id</a></td>
+            <td>DELETE</td>
+        </tr>
+    </table>
+
 </body>
 </html>
