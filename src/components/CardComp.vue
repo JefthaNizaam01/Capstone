@@ -10,7 +10,7 @@
         @input="searchProducts"
       />
 
-      <!-- Filter by Price Dropdown -->
+      
       <div class="dropdown">
         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fa-solid fa-filter fa-lg" style="color: #000000;"></i> Price Filter
@@ -21,7 +21,7 @@
         </ul>
       </div>
 
-      <!-- Filter by Category Dropdown -->
+     
       <div class="dropdown ms-3">
         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fa-solid fa-list fa-lg" style="color: #000000;"></i> Category Filter
@@ -75,19 +75,19 @@ export default {
   data() {
     return {
       search: "",
-      sortOrder: null, // Sorting order: 'lowToHigh' or 'highToLow'
-      selectedCategory: "", // Holds the selected category for filtering
+      sortOrder: null, 
+      selectedCategory: "", 
     };
   },
   computed: {
     categories() {
-      // Extract unique categories from the products
+     
       return [...new Set(this.$store.state.products.map((prod) => prod.category))];
     },
     filteredProducts() {
       let products = this.$store.state.products || [];
 
-      // Filter by search input
+   
       if (this.search) {
         products = products.filter((prod) => {
           return (
@@ -97,12 +97,12 @@ export default {
         });
       }
 
-      // Filter by selected category
+      
       if (this.selectedCategory) {
         products = products.filter((prod) => prod.category === this.selectedCategory);
       }
 
-      // Sort based on sortOrder
+      
       if (this.sortOrder === "lowToHigh") {
         products = products.sort((a, b) => a.amount - b.amount);
       } else if (this.sortOrder === "highToLow") {
@@ -120,11 +120,11 @@ export default {
       this.$store.dispatch("fetchProduct", productID);
     },
     searchProducts() {
-      // Trigger search by updating the 'search' model
+      
     },
   },
   mounted() {
-    this.fetchProducts(); // Fetch products on component mount
+    this.fetchProducts(); 
   },
 };
 </script>
@@ -141,9 +141,10 @@ export default {
 }
 
 #cardBox {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem; /* Added gap between cards */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+  gap: 1rem; 
+  padding: 1rem; 
 }
 
 #productImg {
@@ -160,7 +161,7 @@ export default {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
-    background-color: #a39284; /* Timeless theme */
+    background-color: #a39284; 
     color: #ffffff;
 }
 
@@ -210,5 +211,12 @@ export default {
     #cardBox {
         grid-template-columns: repeat(1, 1fr);
     }
+    
+}
+@media (max-width: 720px) {
+  #cardBox {
+      grid-template-columns: repeat(1, 1fr);
+  }
+  
 }
 </style>
