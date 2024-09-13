@@ -19,16 +19,16 @@ export default {
   props: {
     delay: {
       type: Number,
-      default: 2000 // Default delay of 2 seconds
+      default: 2000 
     }
   },
   data() {
     return {
-      loaded: false // Initial state: not loaded
+      loaded: false 
     };
   },
   mounted() {
-    // Wait for the delay (passed as a prop or default to 2 seconds)
+   
     setTimeout(() => {
       this.loaded = true;
     }, this.delay);
@@ -37,7 +37,7 @@ export default {
 </script>
   
   <style scoped>
-  /* CSS styles for the loader */
+  
   .loader {
     position: fixed;
     left: 0;
@@ -51,7 +51,7 @@ export default {
     z-index: 3333;
   }
   
-  /* Loader spinner animation */
+ 
   .hourglassBackground {
     position: relative;
     background-color: rgb(71, 60, 60);

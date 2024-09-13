@@ -86,15 +86,15 @@ export default {
       amount: '',
       productURL: '',
       category: '',
-      errorMessage: '',  // Added error message for feedback
+      errorMessage: '',  
     };
   },
   computed: {
-    // Check if amount is a valid number
+    
     isAmountValid() {
       return !isNaN(this.amount) && this.amount > 0;
     },
-    // Form validation check
+   
     isFormInvalid() {
       return (
         this.productName.length === 0 ||
@@ -118,14 +118,14 @@ export default {
         const productData = {
           productName: this.productName,
           productDesc: this.productDesc,
-          amount: parseFloat(this.amount), // Ensure amount is stored as a number
+          amount: parseFloat(this.amount), 
           productURL: this.productURL,
           category: this.category,
         };
 
         await this.$store.dispatch('addProduct', productData);
-        this.resetForm();  // Reset form after successful submission
-        this.errorMessage = '';  // Clear error message
+        this.resetForm();  
+        this.errorMessage = '';  
       } catch (error) {
         this.errorMessage = 'An error occurred while adding the product.';
       }
@@ -172,9 +172,9 @@ export default {
     height: 4px;
   }
   
-  /* Track */
+  
 ::-webkit-scrollbar-track {
-    /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.368);  */
+    
     -webkit-border-radius: 1px;
     scroll-behavior: smooth;
     border-radius: 5px;
@@ -184,10 +184,10 @@ export default {
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background: rgb(0, 0, 0); 
-    /* -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.5);  */
+  
   }
   
-  /* triggers when page is inactive */
+  
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(56, 54, 54, 0.632); 
   }

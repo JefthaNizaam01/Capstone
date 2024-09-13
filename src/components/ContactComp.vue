@@ -97,10 +97,10 @@ export default {
   },
   methods: {
     validateForm() {
-      // Clear previous errors
+      
       this.errors = { name: '', email: '', message: '' };
 
-      // Simple validation logic
+      
       let valid = true;
 
       if (this.form.name === '') {
@@ -119,7 +119,7 @@ export default {
         valid = false;
       }
 
-      // If form is valid, submit it
+      
       if (valid) {
         const formElement = this.$refs.form;
         if (formElement) {
