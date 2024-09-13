@@ -45,7 +45,7 @@ export default {
   },
   methods : {
     loginUser(){
-      // console.log(this.$data.username)
+     
       this.$store.dispatch('loginUser', this.$data)
     }
   }
@@ -80,11 +80,11 @@ button {
   position: relative;
   padding: 1em 2em;
   border: 0;
-  background-color: #000; /* Solid black background */
+  background-color: #000; 
   font-family: "Roboto", Arial, "Segoe UI", sans-serif;
   font-size: 18px;
   font-weight: 700;
-  color: #fff; /* White text color */
+  color: #fff; 
   z-index: 2;
   border-radius: var(--border-radius);
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
@@ -98,24 +98,24 @@ button::after {
   width: 100%;
   height: 100%;
   border-radius: var(--border-radius);
-  background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.3)); /* Gradient with soft black-and-white tones */
+  background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.3)); 
   z-index: -1;
   transition: background 0.3s ease-in-out;
 }
 
 button:hover {
-  background-color: #fff; /* White background on hover */
-  color: #000; /* Black text on hover */
+  background-color: #fff; 
+  color: #000; 
 }
 
 button:hover::after {
-  background: linear-gradient(45deg, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3)); /* Reverse gradient on hover */
+  background: linear-gradient(45deg, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3)); 
 }
 
 button:active {
   --border-width: 5px;
-  background-color: #333; /* Darker gray when clicked */
-  color: #fff; /* Keep white text on click */
+  background-color: #333; 
+  color: #fff; 
 }
 
 button,

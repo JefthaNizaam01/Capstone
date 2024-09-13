@@ -13,7 +13,7 @@
             </router-link>
         </div>
 
-        <!-- Cart Items -->
+        
         <div v-for="cart in filteredCart" v-bind:key="cart.prodName" class="mt-3" id="cart">
             <div id="img" class="container">
                 <img :src="cart.prodUrl" height="200" width="200" loading="lazy" class="img img-fluid shadow mx-2 border p-1 my-4"/>
@@ -26,7 +26,7 @@
                     <div id="prodPrice"><span>Price:</span> R{{ cart.amount }}</div>
                 </div>
                 <div class="py-2 my-3 px-4 d-flex gap-2 border-top">
-                    <!-- Removed the favorites button -->
+                   
                     <button @click="deleteFromCart(cart.prodID)" class="btn bg-black text-white w-100">Decrease quantity</button>
                 </div>
             </div>
@@ -52,7 +52,7 @@ export default {
         return {
             Userfavourites: [],
             search: '',
-            sortAsc: true,  // To toggle sorting
+            sortAsc: true,  
         };
     },
     components: {
@@ -62,7 +62,7 @@ export default {
         filteredCart() {
             let cartItems = this.$store.state.cartState;
 
-            // Ensure productName exists and is a string
+            
             if (this.search) {
                 cartItems = cartItems.filter(cart => {
                     const productName = cart.productName || '';
@@ -99,7 +99,7 @@ export default {
             this.Userfavourites.push(favz);
             localStorage.setItem('favs', JSON.stringify(this.Userfavourites));
             await swal(`You just liked a product`, `The product you liked has been saved`, "success");
-            this.$forceUpdate();  // Forces Vue to re-render the favourites without refreshing the page
+            this.$forceUpdate();  
         },
         getFavourites() {
             return JSON.parse(localStorage.getItem("favs")) || [];
@@ -125,12 +125,12 @@ export default {
     flex-direction: row;
     width: 100%;
     justify-content: center;
-    border-radius: 8px; /* Added rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
- /* Added a light background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+ 
     transition: border-color 0.3s ease-in-out; 
     text-align: center; 
-    background-color: #d2c9c2;/* Center text inside cart item *//* Smooth transition for hover effect */
+    background-color: #d2c9c2;
 }
 
 
@@ -141,15 +141,15 @@ export default {
 }
 
 #prodTotal {
-    background-color: #eaeaea; /* Light background for the total price */
-    border-radius: 12px; /* More rounded corners */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #eaeaea; 
+    border-radius: 12px; 
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1); 
     padding: 10px;
 }
 
 #prodTotal:hover {
-    background-color: #d0d0d0; /* Light hover effect */
+    background-color: #d0d0d0; 
 }
 
 #FourOFour {
@@ -157,18 +157,18 @@ export default {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    font-family: 'Arial', sans-serif; /* Changed font for a cleaner look */
+    font-family: 'Arial', sans-serif; 
 }
 
 @media (max-width: 998px) {
     #cart {
         flex-direction: column;
-        border-left: none; /* Removed border for smaller screens */
+        border-left: none; 
     }
 }
 @media (max-width: 558px) {
     #router, div, button, i {
-        font-size: 14px; /* Adjusted font sizes for smaller screens */
+        font-size: 14px; 
     }
 }
 @media (max-width: 358px) {
