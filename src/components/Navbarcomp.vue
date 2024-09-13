@@ -5,7 +5,7 @@
         <img src="https://jefthanizaam01.github.io/favoriteimages/images/timeless logo.png" loading="lazy" alt="logo">
       </router-link>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
         aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -37,14 +37,14 @@
             >Contact</router-link
           >
           <router-link
-  class="nav-link"
-  id="cartXYZ"
-  to="/cart"
-  v-if="$cookies.get('jwt') && $cookies.get('jwt') !== null"
->
-  <i class="fa-solid fa-cart-shopping fa-lg" style="color: black;"></i>
-  <span style="color: black;">{{ cartItemCount }}</span>
-</router-link>
+            class="nav-link"
+            id="cartXYZ"
+            to="/cart"
+            v-if="$cookies.get('jwt') && $cookies.get('jwt') !== null"
+          >
+            <i class="fa-solid fa-cart-shopping fa-lg" style="color: black;"></i>
+            <span style="color: black;">{{ cartItemCount }}</span>
+          </router-link>
           <button
             v-if="$cookies.get('jwt') && $cookies.get('jwt') !== null"
             @click="logOut"
