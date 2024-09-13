@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     addToCart() {
-      // Logic to add the product to the cart
+      
       this.$store.dispatch('addToCart', { userID: this.userID, prodID: this.prodID });
     }
   }

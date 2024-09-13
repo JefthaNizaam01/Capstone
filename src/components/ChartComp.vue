@@ -6,7 +6,7 @@
 import { onMounted, onBeforeUnmount } from "vue";
 import { Chart } from "chart.js";
 
-let myChart; // Declare globally for access in both lifecycle hooks
+let myChart; 
 
 onMounted(() => {
   const ctx = document.getElementById("myChart").getContext("2d");
@@ -30,7 +30,7 @@ onMounted(() => {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false, // Set to false for better control of responsiveness
+      maintainAspectRatio: false, 
       plugins: {
         legend: {
           display: true,
@@ -48,12 +48,11 @@ onMounted(() => {
     },
   });
 
-  // Update the chart after rendering
+  
   myChart.data.datasets[0].data[0] = 5;
   myChart.update();
 });
 
-// Destroy chart to avoid memory leaks
 onBeforeUnmount(() => {
   if (myChart) {
     myChart.destroy();

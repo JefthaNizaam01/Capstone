@@ -14,7 +14,7 @@
           <router-link class="nav-link" active-class="active" to="/">Home</router-link>
           <router-link class="nav-link" active-class="active" to="/about">About</router-link>
           <router-link class="nav-link" active-class="active" to="/products">Products</router-link>
-          <!-- Admin link with no restrictions -->
+         
           <router-link class="nav-link" active-class="active" id="usersRole" to="/admin">Admin</router-link>
           <router-link
             class="nav-link"
@@ -66,22 +66,22 @@
 export default {
   data() {
     return {
-      cartItemCount: 0, // Initial count set to 0
+      cartItemCount: 0, 
     };
   },
   created() {
-    this.watchCart(); // Start watching the cart when the component is created
+    this.watchCart(); 
   },
   methods: {
     logOut() {
       this.$store.dispatch('logoutUser');
     },
     watchCart() {
-      // Watch for changes in the cart state
+      
       this.$watch(
         () => this.$store.state.cartState || [],
         (newValue) => {
-          this.cartItemCount = newValue.length; // Update cart item count when the state changes
+          this.cartItemCount = newValue.length; 
         },
         { immediate: true }
       );
