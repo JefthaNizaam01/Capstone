@@ -102,6 +102,7 @@ export default {
     flex-direction: column;
     width: 100%;
     background-color: #d2c9c2;
+    padding: 2rem;
 }
 
 #box {
