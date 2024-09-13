@@ -15,7 +15,7 @@ const PORT = process.env.MYSQL_ADDON_PORT || 2303;
 app.use(express.static('./Static'));
 
 app.use(cors({
-    origin: 'https://timeless-8f9ab.web.app/',
+    origin: 'https://timeless-8f9ab.web.app',
     credentials: true
 }));
 
