@@ -94,7 +94,7 @@ export default createStore({
       try {
         const res = await axios.post(`https://capstone-19.onrender.com/users`, userpayload)
 
-        await swal(`Welcome to W-store ${userpayload.username}!`, "You have successfully created an account", "success");
+        await swal(`Welcome to Timeless ${userpayload.username}!`, "You have successfully created an account", "success");
 
         await router.push('/login')
 
@@ -144,7 +144,7 @@ export default createStore({
   
         localStorage.removeItem('activeUser')
   
-        await swal(`You have ${res.data.msg}`, "Goodbye! come shop soon", "success");
+        await swal(`You have ${res.data.msg}`, "Goodbye! come back soon", "success");
   
         await router.push('/')
   
