@@ -248,8 +248,11 @@ export default {
 
 .user-img {
   width: 100%;
-  height: 200px;
+  height: auto;
   object-fit: cover;
+  max-width: 60%; 
+  border-radius: 10px; 
+  margin-top:1rem;
 }
 
 .card {
