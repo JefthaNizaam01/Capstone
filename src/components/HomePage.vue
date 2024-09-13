@@ -353,7 +353,7 @@ body {
   text-align: left;
   position: relative;
   width: 80%;
-  z-index: 2; /* Ensure it stays above the stars */
+  z-index: 2; 
 }
 
 .timeless-logo {
@@ -392,9 +392,9 @@ body {
 
 .second-hand {
   position: absolute;
-  width: 2px; /* Adjust the width for the hand's thickness */
-  height: 100px; /* Adjust the length of the hand */
-  background: #f0d9c5; /* Color of the hand */
+  width: 2px; 
+  height: 100px; 
+  background: #f0d9c5; 
   top: 30.1%;
   left: 50.1%;
   transform-origin: bottom center;
@@ -448,7 +448,177 @@ body {
   margin: 5px 0;
 }
 .shop-now-link {
-  text-decoration: none; /* Removes underline from the link */
+  text-decoration: none; 
 }
+@media (max-width: 768px) {
+  .context {
+    width: 90%;
+    text-align: center; 
+  }
 
+  .timeless-logo {
+    font-size: 2.5rem; 
+    top: 30%; 
+    left: 13%;
+    transform: translateX(-50%); 
+  }
+
+  .timeless-slogan {
+    font-size: 1rem; 
+    top: 45%; 
+    left: 15%;
+    transform: translateX(-50%); 
+  }
+
+  .watch-container {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+  }
+
+  .watch-image {
+    width: 80%; 
+    max-width: 300px; 
+    height: auto;
+  }
+
+  .second-hand {
+    width: 1.5px; 
+    height: 70px; 
+    top: 28%;
+  }
+
+  .shop-now-button {
+    font-size: 1.2rem; 
+    padding: 8px 16px; 
+    position: static; 
+    margin: 20px auto; 
+    top: auto; 
+    right: auto; 
+  }
+
+  .watch-details {
+    top: 30%; 
+    right: 0%;
+    left: 80%;
+    transform: translateX(-50%); 
+    font-size: 1rem; 
+  }
+
+  .watch-details p {
+    margin: 10px 0; 
+  }
+}
+@media (min-width: 768px) and (max-width: 1300px) {
+  .context {
+    width: 90%;
+    text-align: center; 
+  }
+
+  .timeless-logo {
+    font-size: 2.5rem; 
+    top: 30%; 
+    left: 13%;
+    transform: translateX(-50%); 
+  }
+
+  .timeless-slogan {
+    font-size: 1rem; 
+    top: 45%; 
+    left: 15%;
+    transform: translateX(-50%); 
+  }
+
+  .watch-container {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+  }
+
+  .watch-image {
+    width: 80%; 
+    max-width: 300px; 
+    height: auto;
+  }
+
+  .second-hand {
+    width: 1.5px; 
+    height: 70px; 
+    top: 28%;
+  }
+
+  .shop-now-button {
+    font-size: 1.2rem; 
+    padding: 8px 16px; 
+    position: static; 
+    margin: 20px auto; 
+    top: auto; 
+    right: auto; 
+  }
+
+  .watch-details {
+    top: 30%; 
+    right: 0%;
+    left: 80%;
+    transform: translateX(-50%); 
+    font-size: 1rem; 
+  }
+
+  .watch-details p {
+    margin: 10px 0; 
+  }
+}
+@media (min-width: 300px) and (max-width: 700px) {
+  .context {
+    width: 90%;
+    text-align: center; 
+  }
+
+  .timeless-logo {
+    font-size: 1rem; 
+    top: 30%; 
+    left: 13%;
+    transform: translateX(-50%); 
+  }
+
+  .timeless-slogan {
+    font-size: 0.5rem; 
+    top: 45%; 
+    left: 15%;
+    transform: translateX(-50%); 
+  }
+
+  .watch-container {
+    margin: 0 auto;
+    width: 50%;
+    height: auto;
+  }
+
+  .watch-image {
+    width: 80%; 
+    max-width: 300px; 
+    height: auto;
+  }
+
+  .second-hand {
+    width: 0.4px; 
+    height: 20px; 
+    top: 33%;
+  }
+
+  .shop-now-button {
+    font-size: 0.3rem; 
+    padding: 8px 16px; 
+    position: static; 
+    margin: 20px auto; 
+    top: auto; 
+    right: auto; 
+  }
+
+ 
+
+  .watch-details p {
+    font-size: 0.6rem;
+  }
+}
 </style>
