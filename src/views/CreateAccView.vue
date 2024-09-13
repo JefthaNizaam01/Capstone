@@ -52,7 +52,7 @@ export default {
           passw: '',
           userRole: 'user',
           profileURL: '',
-          errorMessage: '', // To capture and display error messages
+          errorMessage: '', 
       };
   },
   computed: {
@@ -80,7 +80,7 @@ export default {
       async signUser() {
           try {
               await this.$store.dispatch('SignUser', this.$data);
-              // Provide feedback or success message
+              
               await swal('Registration Successful', 'You can now log in!', 'success');
               router.push('/login');
           } catch (error) {
@@ -108,7 +108,7 @@ export default {
 }
 
 #bgForm {
-  background-color: rgba(235, 231, 240, 0.7); /* Added opacity to improve contrast */
+  background-color: rgba(235, 231, 240, 0.7); 
   padding-top: 20px;
   padding-bottom: 20px;
   backdrop-filter: blur(10px);
@@ -118,7 +118,7 @@ export default {
 [data-inp] {
   box-shadow: 2px 2px 14px 2px rgba(0, 0, 0, 0.375);
   background-color: white;
-  color: black; /* Changed text color to ensure readability */
+  color: black; 
 }
 
 #btn {
@@ -132,10 +132,10 @@ export default {
 }
 
 .text-danger {
-  color: red; /* Ensure error messages are clearly visible */
+  color: red; 
 }
 .text-shadow {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds shadow to the text */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
     

@@ -1,6 +1,6 @@
 <template>
   <div class="p-5 mt-5">
-    <!-- Products in Table Format -->
+   
     <h1>Manage Products</h1>
     <div class="table-responsive">
       <table class="table table-bordered table-striped mt-3">
@@ -32,7 +32,7 @@
       </table>
     </div>
 
-    <!-- Product Update Modals -->
+    
     <div v-for="product in $store.state.products" :key="'modal-' + product.prodID">
       <div class="modal fade" :id="'updateProductModal' + product.prodID" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateProductModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -42,7 +42,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <!-- Product Update Form -->
+             
               <div class="input-group flex-nowrap mb-2">
                 <span class="input-group-text">Product Name</span>
                 <input type="text" class="form-control" placeholder="Product name" v-model="selectedProduct.productName">
@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <!-- Manage Users -->
+    
     <h1 class="mt-5 pt-5">Manage Users</h1>
     <div class="users-container">
       <div class="user-card" v-for="user in $store.state.users" :key="user.userID">
@@ -86,7 +86,7 @@
                 Update
               </button>
 
-              <!-- User Update Modal -->
+              
               <div class="modal fade" :id="'updateUserModal' + user.userID" tabindex="-1" aria-labelledby="updateUserModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -95,7 +95,7 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <!-- User Update Form -->
+                     
                       <div class="input-group flex-nowrap mb-2">
                         <span class="input-group-text">Username</span>
                         <input type="text" class="form-control" v-model="username">
@@ -143,14 +143,14 @@ import ChartComp from '../components/ChartComp.vue'
 export default {
   data() {
     return {
-      // users
+      
       userID: null,
       username: '',
       emailAdd: '',
       passw: '',
       userRole: '',
       profileURL: '',
-      // products
+      
       selectedProduct: {
         prodID: null,
         productName: '',
@@ -159,7 +159,7 @@ export default {
         productURL: '',
         category: ''
       },
-      // error handling
+      
       errorText: '',
       search: ''
     };
@@ -231,7 +231,7 @@ export default {
 }
 
 .table img {
-  max-width: 100px; /* Ensure images are not too large in the table */
+  max-width: 100px; 
 }
 
 .users-container {
@@ -241,7 +241,7 @@ export default {
 }
 
 .user-card {
-  flex: 1 1 300px; /* Adjust the base width of the cards */
+  flex: 1 1 300px; 
   max-width: 350px;
   margin: 10px;
 }

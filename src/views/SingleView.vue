@@ -41,7 +41,7 @@ export default {
     },
     data() {
         return {
-            userID: 'userID' // Replace this with the actual userID
+            userID: 'userID' 
         }
     },
     methods: {

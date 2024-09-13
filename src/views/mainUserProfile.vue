@@ -34,7 +34,7 @@
         </div>
     </div>
 
-    <!-- Modal Structure -->
+    
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -43,7 +43,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Modal Body Content -->
+                 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -94,7 +94,7 @@ export default {
 </script>
 
 <style scoped>
-/* Centering the content */
+
 #boxLg {
     display: flex;
     justify-content: center;
@@ -126,7 +126,7 @@ export default {
     cursor: pointer;
 }
 
-/* Button Styles */
+
 #button {
     width: fit-content;
     display: flex;
@@ -158,7 +158,7 @@ export default {
     fill: #000;
 }
 
-/* Modal Styles */
+
 .modal-content {
     background-color: #f5f5f5;
     border: 1px solid #d2c9c2;
